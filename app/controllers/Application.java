@@ -11,8 +11,8 @@ public class Application extends Controller {
         return ok(index.render("Hello world", "Test"));
     }
     
-    public static Result askQuestion() {
-        return ok(askQuestion.render());
+    public static Result questionAsk() {
+        return ok(questionAsk.render());
     }
     
     
