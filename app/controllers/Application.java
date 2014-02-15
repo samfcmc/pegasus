@@ -10,5 +10,11 @@ public class Application extends Controller {
     public static Result index() {
         return ok(index.render("Hello world", "Test"));
     }
+    
+    public static Result askQuestion() {
+        return ok(askQuestion.render());
+    }
+    
+    
 
 }
