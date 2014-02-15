@@ -1,0 +1,40 @@
+package models;
+
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
+import play.db.ebean.Model;
+
+@Entity
+public class User extends Model {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	public Long id;
+	
+	public String name;
+	public String userName;
+	
+	@OneToMany
+	public List<Question> questions;
+	
+	@OneToMany
+	public List<Answer> answers;
+	
+	@ManyToMany
+	public List<Course> courses;
+	
+	
+	
+	
+	
+	
+}
