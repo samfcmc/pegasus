@@ -2,6 +2,7 @@ package models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -23,13 +24,13 @@ public class User extends Model {
 	public String name;
 	public String userName;
 	
-	@OneToMany
+	@OneToMany(cascade=CascadeType.PERSIST)
 	public List<Question> questions;
 	
-	@OneToMany
+	@OneToMany(cascade=CascadeType.PERSIST)
 	public List<Answer> answers;
 	
-	@ManyToMany
+	@ManyToMany(cascade=CascadeType.PERSIST)
 	public List<Course> courses;
 	
 	

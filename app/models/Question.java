@@ -2,6 +2,7 @@ package models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -21,7 +22,7 @@ public class Question extends Model {
 	public Integer rating;
 	//public dateTime; TODO ver do Tipo para isto.
 	
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
 	public List<Answer> answers;
 	
 }
