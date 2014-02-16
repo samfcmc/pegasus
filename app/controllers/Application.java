@@ -11,7 +11,7 @@ public class Application extends Controller {
 
     public static Result index() {
     	String name = "";
-    	String username = session("user");
+    	String username = session().get("user");
     	
     	String code = request().getQueryString("code");
     	if(code != null && username == null) {
@@ -20,17 +20,13 @@ public class Application extends Controller {
     		session().clear();
     		session("user", user.userName);
     	}
-    	else if(username != null) {
-    		User user = User.findByUsername(username);
-    		if(user == null) {
-    			session().clear();
-    		}
-    		else {
-    			name = user.name;
-    		}
-    		
-    	}
+    	
         return ok(index.render("Hello world", name));
+    }
+    
+    public static Result logout() {
+    	session().clear();
+    	return redirect(routes.Application.index());
     }
     
     public static Result questionAsk() {
