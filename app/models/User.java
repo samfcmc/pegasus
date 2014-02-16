@@ -24,6 +24,9 @@ public class User extends Model {
 	public String name;
 	public String userName;
 	
+	public String accessToken;
+	public String refreshToken;
+	
 	@OneToMany(cascade=CascadeType.PERSIST)
 	public List<Question> questions;
 	
