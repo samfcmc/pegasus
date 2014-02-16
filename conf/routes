@@ -4,7 +4,7 @@
 
 # Home page
 GET     /                           controllers.Application.index()
-GET     /lol                        controllers.Application.lol()
+GET     /populate                   controllers.Populate.index()
 GET     /search                     controllers.Search.index()
 
 
