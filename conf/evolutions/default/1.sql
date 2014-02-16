@@ -5,7 +5,7 @@
 
 create table answer (
   id                        bigint not null,
-  user_id                   bigint not null,
+  question_id               bigint not null,
   text                      varchar(255),
   rating                    integer,
   constraint pk_answer primary key (id))
@@ -47,8 +47,8 @@ create sequence question_seq;
 
 create sequence user_seq;
 
-alter table answer add constraint fk_answer_user_1 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_answer_user_1 on answer (user_id);
+alter table answer add constraint fk_answer_question_1 foreign key (question_id) references question (id) on delete restrict on update restrict;
+create index ix_answer_question_1 on answer (question_id);
 alter table question add constraint fk_question_user_2 foreign key (user_id) references user (id) on delete restrict on update restrict;
 create index ix_question_user_2 on question (user_id);
 
