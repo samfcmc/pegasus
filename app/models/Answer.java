@@ -9,7 +9,7 @@ import play.db.ebean.Model;
 public class Answer extends Model {
 
 	
-	private static final long serialVersionUID = 1L;
+	//private static final long serialVersionUID = 1L;
 
 	@Id
 	public Long id;
@@ -17,4 +17,10 @@ public class Answer extends Model {
 	public String text;
 	public Integer rating;
 	//TODO datetime
+	
+	public Answer(Long id, String text, Integer rating){
+		this.id = id;
+		this.text = text;
+		this.rating = rating;
+	}
 }

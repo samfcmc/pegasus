@@ -12,8 +12,15 @@ import play.db.ebean.Model;
 @Entity
 public class Question extends Model {
 
-	private static final long serialVersionUID = 1L;
+	//private static final long serialVersionUID = 1L;
 	
+	public Question(String title, String text, int rating, long id) {
+		this.title = title;
+		this.text = text;
+		this.rating = rating;
+		this.id = id;
+	}
+
 	@Id
 	public Long id;
 	

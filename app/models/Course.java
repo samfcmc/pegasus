@@ -12,7 +12,7 @@ import play.db.ebean.Model;
 @Entity
 public class Course extends Model {
 
-	private static final long serialVersionUID = 1L;
+	//private static final long serialVersionUID = 1L;
 
 	@Id
 	public Long id;
@@ -21,5 +21,10 @@ public class Course extends Model {
 	
 	@OneToMany(cascade=CascadeType.ALL)
 	public List<Question> questions;
+	
+	public Course(String name){
+		this.name = name;
+	}
+
 }
 
