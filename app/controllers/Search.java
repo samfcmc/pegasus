@@ -61,20 +61,15 @@ public class Search extends Controller {
 		Course course = new Course("Maths");
 		course.questions.add(question);
 		course.save();
-		// user.save();
 
 		Ebean.beginTransaction();
 		try {
 			user.save();
 			question.save();
-			// Ebean.save(user);
-			// Ebean.save(user.questions);
 		} finally {
 			Ebean.endTransaction();
 		}
 
-		// question.save();
-		// question.save();
 		return ok(index.render("Hello world", "Test"));
 	}
 }
