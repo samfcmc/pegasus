@@ -1,0 +1,23 @@
+@(searchQuery: String, resultsSearch: List[Question])
+
+@main("Welcome to Play") {
+	
+	<div>
+			<h1>Results for "@searchQuery":</h1>
+	</div>
+	 
+	 @if(resultsSearch.length == 0){
+		<div>
+			<h4>No results.</h4>
+		</div>
+	}else{
+		<table class="table-striped table">
+			@for(question <- resultsSearch){
+				<tr>
+					<td>@question.title</td>
+					<td>@question.rating</td>
+				</tr>
+		}
+		</table>
+	}
+}
