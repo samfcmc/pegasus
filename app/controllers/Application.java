@@ -1,10 +1,7 @@
 package controllers;
 
 import models.User;
-import fenixedu.FenixEduClientQAFactory;
-import play.*;
 import play.mvc.*;
-import pt.ist.fenixedu.sdk.FenixEduClient;
 import views.html.*;
 
 public class Application extends Controller {
@@ -36,3 +33,4 @@ public class Application extends Controller {
     
 
 }
+
