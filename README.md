@@ -18,4 +18,19 @@ To make it work with fenix api you need to follow this steps:
 <code>play run</code>
 <br>
 
+Configure database
+<br>
+Now, the application just supports mysql
+<br>
+- Run your mysql server
+<br>
+- Create a new empty database
+<br>
+- Create the following environment variables
+<br>
+<code> QA_DB_URL=jdbc:mysql://localhost/<db name>/code>
+<code> QA_DB_USER=<user for your db></code>
+<code> QA_DB_PASS=<password for your db></code>
+<br>
+
 Enjoy ;)
