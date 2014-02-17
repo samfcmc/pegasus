@@ -28,9 +28,13 @@ Now, the application just supports mysql
 <br>
 - Create the following environment variables
 <br>
-<code> QA_DB_URL=jdbc:mysql://localhost/<db name>/code>
-<code> QA_DB_USER=<user for your db></code>
-<code> QA_DB_PASS=<password for your db></code>
+<code> 
+<br>
+QA_DB_URL=jdbc:mysql://localhost/[db name]
+<br>
+QA_DB_USER=[user for your db]
+<br>
+QA_DB_PASS=[password for your db]</code>
 <br>
 
 Enjoy ;)
