@@ -7,48 +7,29 @@ import models.Question;
 import models.User;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.listQuestions;
 import views.html.index;
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
 
 public class Search extends Controller {
 	public static Result index() {
     	
-    	String searchQuery = request().getQueryString("searchString"); 
-    	
-    	List<Question> resultsTitles = Ebean.find(Question.class)
-    			.where()
-    			.like("title", "%" + searchQuery + "%")
-    			.findList();
+    	String searchQuery = request().body().asFormUrlEncoded().get("searchString")[0];/*getQueryString("searchString")*/; 
+    	String searchTitle = "Results for \"" + searchQuery + " \":";
     	
     	List<Question> results = Ebean.find(Question.class)
-    			.where()
-    			.like("text", "%" + searchQuery + "%")
-    			.findList();
+			.where().or(
+    					Expr.like("title", "%" + searchQuery + "%"), 
+    					Expr.like("text", "%" + searchQuery + "%")
+    					)
+			.findList();
     	
-    	for (Question q : results){
-    		if (! resultsTitles.contains(q))
-    		{
-    			resultsTitles.add(q);
-    		}
-    	}
     	
-    	System.out.println("results.size = "+ results.size());
-    	if (results.size() != 0)
-    		{
-    			String stringResultsTitle = "Results for \" " + request().getQueryString("searchString") + " \": ";
-	      		String stringResults = "";
-    			for (Question q : results)
-	      		{
-	      			stringResults += q.getTitle() +  System.getProperty("line.separator");
-	      		}
-    		
-	      		return ok(index.render(stringResultsTitle, stringResults));
-    		}	
-    	else
-    		return ok(index.render("Results for " + request().getQueryString("searchString"), "No results were found."));
-		//return null;
-        
+    	return ok(listQuestions.render(searchQuery, results));
+    	
+//    	Logger.debug(string);
     }
 
 	public static Result populate() {
@@ -61,20 +42,15 @@ public class Search extends Controller {
 		Course course = new Course("Maths");
 		course.questions.add(question);
 		course.save();
-		// user.save();
 
 		Ebean.beginTransaction();
 		try {
 			user.save();
 			question.save();
-			// Ebean.save(user);
-			// Ebean.save(user.questions);
 		} finally {
 			Ebean.endTransaction();
 		}
 
-		// question.save();
-		// question.save();
 		return ok(index.render("Hello world", "Test"));
 	}
 }

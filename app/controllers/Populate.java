@@ -13,7 +13,6 @@ public class Populate extends Controller {
     
     public static Result index() {
     	User user = new User("user1", "u1");
-    	//user.save();
     	
     	Question question = new Question("pergunta2","texto da pergunta");
     	user.questions.add(question);
@@ -21,7 +20,6 @@ public class Populate extends Controller {
     	Course course = new Course("Maths");
     	course.add(question);
     	course.save();
-    	//user.save();
     	
     	Ebean.beginTransaction();
     	try
