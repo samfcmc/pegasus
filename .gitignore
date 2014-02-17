@@ -19,3 +19,7 @@ test-result
 server.pid
 *.iml
 *.eml
+
+# To not track fenix edu api details (like app secret)
+# FOR SECURITY REASONS
+fenixedu.yml
