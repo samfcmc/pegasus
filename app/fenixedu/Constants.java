@@ -1,7 +1,6 @@
 package fenixedu;
 
 import pt.ist.fenixedu.sdk.FenixEduClient;
-import pt.ist.fenixedu.sdk.FenixEduClientFactory;
 
 public class Constants {
 	
