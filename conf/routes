@@ -3,9 +3,9 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
-POST     /populate                   controllers.Populate.index()
-POST     /search                     controllers.Search.index()
+GET    /                           controllers.Application.index()
+GET    /populate                   controllers.Populate.index()
+POST   /search                     controllers.Search.index()
 
 
 # Questions
