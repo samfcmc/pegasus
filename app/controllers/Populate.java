@@ -1,6 +1,6 @@
 package controllers;
 
-import models.Course;
+import models.Tag;
 import models.Question;
 import models.User;
 import play.mvc.Controller;
@@ -17,7 +17,7 @@ public class Populate extends Controller {
     	Question question = new Question("pergunta2","texto da pergunta");
     	user.questions.add(question);
     	
-    	Course course = new Course("Maths");
+    	Tag course = new Tag("Maths", "MM", "m1");
     	course.add(question);
     	course.save();
     	

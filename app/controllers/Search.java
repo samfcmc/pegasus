@@ -2,7 +2,7 @@ package controllers;
 
 import java.util.List;
 
-import models.Course;
+import models.Tag;
 import models.Question;
 import models.User;
 import play.mvc.Controller;
@@ -39,7 +39,7 @@ public class Search extends Controller {
 		Question question = new Question("pergunta1", "texto da pergunta");
 		user.questions.add(question);
 
-		Course course = new Course("Maths");
+		Tag course = new Tag("Maths", "M", "m1");
 		course.questions.add(question);
 		course.save();
 

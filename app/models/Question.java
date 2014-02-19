@@ -5,7 +5,10 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import play.db.ebean.Model;
 
@@ -24,6 +27,12 @@ public class Question extends Model {
 	
 	@OneToMany(cascade=CascadeType.ALL)
 	public List<Answer> answers;
+	
+	@ManyToMany(cascade=CascadeType.ALL)
+	public Tag tags;
+	
+	@ManyToOne(cascade=CascadeType.ALL)
+	public User owner;
 	
 	public Question(String title, String text) {
 		this.title = title;
