@@ -3,6 +3,7 @@
 .*
 # except for .gitignore
 !.gitignore
+!.jdk-overlay
 
 # Ignore Play! working directory #
 db
