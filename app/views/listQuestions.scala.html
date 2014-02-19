@@ -14,8 +14,12 @@
 		<table class="table-striped table">
 			@for(question <- resultsSearch){
 				<tr>
-					<td>@question.title</td>
-					<td>@question.rating</td>
+					<td>
+						<a href="@routes.Questions.show(question.id)">@question.title</a>
+					</td>					
+					<td>
+						<span class="glyphicon glyphicon-star-empty">@question.rating</span>
+					</td>
 				</tr>
 		}
 		</table>

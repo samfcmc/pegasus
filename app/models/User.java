@@ -90,7 +90,6 @@ public class User extends Model {
 		this.userName = userName;
 		questions = new LinkedList<Question>();
 	};
-	
 
 	public Long getId() {
 		return id;
