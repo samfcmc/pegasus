@@ -1,7 +1,10 @@
 package models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import play.db.ebean.Model;
 
@@ -16,6 +19,12 @@ public class Answer extends Model {
 	public String text;
 	public Integer rating;
 	//TODO datetime
+	
+	@OneToOne(cascade=CascadeType.ALL) //TODO check if dangerous with "cascade deletes"
+	public User owner;
+
+	@ManyToOne(cascade=CascadeType.ALL) //TODO check if dangerous with "cascade deletes"
+	public Question question;
 	
 	public Answer(Long id, String text, Integer rating){
 		this.id = id;
