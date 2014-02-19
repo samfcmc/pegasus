@@ -82,7 +82,7 @@ public class User extends Model {
 			user.refreshToken = userConfig.getRefreshToken();
 		}
 
-		setUserCoursesFromAPI(user);
+		//setUserCoursesFromAPI(user);
 
 		user.save();
 
