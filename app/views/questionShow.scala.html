@@ -1,4 +1,4 @@
-@(question: Question)
+@(question: Question, rating: Int, canVote: Boolean)
 
 @main("Question") {
 	<div>
@@ -10,7 +10,7 @@
   			</tr>
   			<tr>
   				<td>
-  					<span class="glyphicon glyphicon-star-empty">@question.rating()</span>
+  					<span class="glyphicon glyphicon-star-empty">@rating</span>
   				</td>
   			</tr>
   			<tr>
@@ -28,6 +28,7 @@
     						</button>
     					</a>
   					</div>
+  					@if(canVote) {
   					<div class="btn-group">
   						<a href="@routes.Questions.rate(question.id)">
     						<button type="button" class="btn btn-success">
@@ -36,6 +37,7 @@
     						</button>
     					</a>
   					</div>
+  					}
   				</td>
   			</tr>
   			<!-- Answers -->

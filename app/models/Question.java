@@ -62,9 +62,9 @@ public class Question extends Model {
 
 	public int rating() {
 		int result = 0;
-		for (Vote vote : votes) {
+		/*for (Vote vote : votes) {
 			result += vote.value;
-		}
+		}*/
 
 		return result;
 	}
