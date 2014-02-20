@@ -15,25 +15,37 @@ import com.avaje.ebean.Ebean;
 public class Populate extends Controller {
     
     public static Result index() {
-    	User user = new User("user1", "u1");
-    	Tag tag = new Tag("Maths", "MM", "m1");
-    	List<Tag> tags = new ArrayList<Tag>();
-    	tags.add(tag);  	
-    	Question question = new Question("pergunta2","texto da pergunta", tags, user);
-    	tag.add(question);
-    	Ebean.beginTransaction();
-    	try
-    	{
-    		tag.save();
-    		user.save();
-    		question.save();
-    		return ok(index.render("Success", ""));
-    	} catch(Exception e) {
-    		return ok(index.render("Error", ""));
-    	}
-    	finally{
-    		Ebean.endTransaction();
-    	}
+    	User user1 = new User("user1", "u1");
+    	User user2 = new User("user2", "u2");
     	
+    	Question question = new Question("pergunta2","texto da pergunta");
+    	question.owner = user1;
+    	
+    	Tag tagCourse = new Tag("Plataformas...", "PADI", "padi");
+//    	Tag tagCourse2 = new Tag("Programacao avançada...", "PA", "pa");
+    	
+    	user1.favouriteTags.add(tagCourse);
+//    	user1.favouriteTags.add(tagCourse2);
+//    	user2.favouriteTags.add(tagCourse2);
+    	
+    	tagCourse.add(question);
+    	tagCourse.users.add(user1);
+//    	tagCourse2.users.add(user1);
+//    	tagCourse2.users.add(user2);
+//    	
+//    	Ebean.beginTransaction();
+//    	try
+//    	{
+    		tagCourse.save();
+//    		tagCourse2.save();
+    		user1.save();
+    		user2.save();
+    		question.save();
+//    	}
+//    	finally{
+//    		Ebean.endTransaction();
+//    	}
+//    	
+        return ok(index.render("", ""));
     }
 }

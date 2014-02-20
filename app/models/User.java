@@ -18,6 +18,7 @@ import pt.ist.fenixedu.sdk.beans.FenixPerson;
 import pt.ist.fenixedu.sdk.beans.FenixPersonCourses;
 import pt.ist.fenixedu.sdk.beans.FenixPersonCourses.FenixCourse;
 import pt.ist.fenixedu.sdk.beans.FenixPersonCourses.FenixEnrolment;
+import views.html.listQuestions;
 import fenixedu.FenixEduClientQAFactory;
 
 @Entity
@@ -41,7 +42,6 @@ public class User extends Model {
 	public List<Answer> answers;
 
 	@ManyToMany(cascade=CascadeType.ALL)
-	//public List<Tag> courses;
 	public List<Tag> favouriteTags;
 	
 	public static Finder<String, User> find = new Finder<String, User>(
@@ -94,9 +94,7 @@ public class User extends Model {
 		FenixEduClient client = FenixEduClientQAFactory.getSingleton();
 		FenixEduUserConfig userConfig = user.getFenixEduUserConfig();
 		
-		String academicTerm = "2013/2014"; //FIXME
-		FenixPersonCourses courses = client.getPersonCourses(academicTerm, userConfig); //FIXME academicTerm
-		List<Tag> myCourses = new ArrayList<Tag>();
+		FenixPersonCourses courses = client.getPersonCourses("2013/2014", userConfig); //FIXME academicTerm
 		
 		for (FenixEnrolment c : courses.getEnrolments()){
 			if (Tag.findByFenixId(c.getId()) == null){

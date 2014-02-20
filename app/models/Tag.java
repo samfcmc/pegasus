@@ -26,8 +26,8 @@ public class Tag extends Model {
 	@ManyToMany(cascade=CascadeType.ALL)
 	public List<Question> questions;
 	
-//	@ManyToMany(cascade=CascadeType.ALL)
-//	public List<User> users;
+	@ManyToMany(cascade=CascadeType.ALL/*, mappedBy = "favouriteTags"*/)
+	public List<User> users;
 	
 	public Tag(String name, String acronym, String fenixId) {
 //		this.fenixId = fenixId;

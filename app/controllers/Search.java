@@ -16,8 +16,8 @@ import com.avaje.ebean.Expr;
 public class Search extends Controller {
 	public static Result index() {
     	
-    	String searchQuery = request().body().asFormUrlEncoded().get("searchString")[0];/*getQueryString("searchString")*/; 
-    	String searchTitle = "Results for \"" + searchQuery + " \":";
+    	String searchQuery = request().getQueryString("searchString");/*getQueryString("searchString")*/; 
+    	//String searchTitle = "Results for \"" + searchQuery + " \":";
     	
     	List<Question> results = Ebean.find(Question.class)
 			.where().or(
@@ -25,16 +25,11 @@ public class Search extends Controller {
     					Expr.like("text", "%" + searchQuery + "%")
     					)
 			.findList();
-    	
-    	
     	return ok(listQuestions.render(searchQuery, results));
-    	
-//    	Logger.debug(string);
     }
 
 	public static Result populate() {
 		User user = new User("user1", "u1");
-		// user.save();
 
 		Question question = new Question("pergunta1", "texto da pergunta");
 		user.questions.add(question);
