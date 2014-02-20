@@ -1,0 +1,16 @@
+@(question: Question)
+
+@main("Edit a Question") {
+	<div class="edit_question_container">
+		<h2>Edit this Question</h2>
+		<form action="@routes.Questions.doEdit(question.id)" method="post">
+			<input name="title" type="text" class="form-control" placeholder="Question title here" value="@question.title">
+			<br>
+			<textarea name="text" class="form-control" rows="8">@question.text</textarea>
+			<br>
+			<input name="tags" type="text" class="form-control" placeholder="Insert tags" value="@for(tag<-question.tags){@tag.label }">
+			<br>
+			<button type="submit" class="btn btn-success btn-lg">Edit Question</button>
+		</form>
+	</div>
+}
