@@ -11,6 +11,8 @@ POST   /search                     controllers.Search.index()
 # Questions
 GET		/questions/ask				controllers.Questions.ask()
 POST	/questions/ask				controllers.Questions.create()
+GET		/questions/:id/edit			controllers.Questions.edit(id: Long)
+POST	/questions/:id/edit			controllers.Questions.doEdit(id: Long)
 GET		/questions/:id				controllers.Questions.show(id: Long)
 GET		/questions/:id/rate			controllers.Questions.rate(id: Long)
 

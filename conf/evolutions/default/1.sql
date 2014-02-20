@@ -48,12 +48,6 @@ create table question_tag (
   constraint pk_question_tag primary key (question_id, tag_id))
 ;
 
-create table question_tag (
-  question_id                    bigint not null,
-  tag_id                         bigint not null,
-  constraint pk_question_tag primary key (question_id, tag_id))
-;
-
 create table tag_question (
   tag_id                         bigint not null,
   question_id                    bigint not null,
@@ -77,10 +71,6 @@ alter table vote add constraint fk_vote_question_5 foreign key (question_id) ref
 create index ix_vote_question_5 on vote (question_id);
 
 
-
-alter table question_tag add constraint fk_question_tag_question_01 foreign key (question_id) references question (id) on delete restrict on update restrict;
-
-alter table question_tag add constraint fk_question_tag_tag_02 foreign key (tag_id) references tag (id) on delete restrict on update restrict;
 
 alter table question_tag add constraint fk_question_tag_question_01 foreign key (question_id) references question (id) on delete restrict on update restrict;
 
