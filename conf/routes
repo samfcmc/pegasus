@@ -9,7 +9,8 @@ POST   /search                     controllers.Search.index()
 
 
 # Questions
-GET		/questions/ask				controllers.Application.questionAsk()
+GET		/questions/ask				controllers.Questions.ask()
+POST	/questions/ask				controllers.Questions.create()
 GET		/questions/:id				controllers.Questions.show(id: Long)
 
 # Authentication

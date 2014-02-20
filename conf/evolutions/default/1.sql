@@ -37,6 +37,12 @@ create table user (
 ;
 
 
+create table question_tag (
+  question_id                    bigint not null,
+  tag_id                         bigint not null,
+  constraint pk_question_tag primary key (question_id, tag_id))
+;
+
 create table tag_question (
   tag_id                         bigint not null,
   question_id                    bigint not null,
@@ -57,6 +63,10 @@ create index ix_question_owner_3 on question (owner_id);
 
 
 
+alter table question_tag add constraint fk_question_tag_question_01 foreign key (question_id) references question (id) on delete restrict on update restrict;
+
+alter table question_tag add constraint fk_question_tag_tag_02 foreign key (tag_id) references tag (id) on delete restrict on update restrict;
+
 alter table tag_question add constraint fk_tag_question_tag_01 foreign key (tag_id) references tag (id) on delete restrict on update restrict;
 
 alter table tag_question add constraint fk_tag_question_question_02 foreign key (question_id) references question (id) on delete restrict on update restrict;
@@ -72,6 +82,8 @@ SET FOREIGN_KEY_CHECKS=0;
 drop table answer;
 
 drop table question;
+
+drop table question_tag;
 
 drop table tag;
 

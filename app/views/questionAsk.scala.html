@@ -1,17 +1,12 @@
 @main("Ask a Question") {
 	<div class="ask_question_container">
 		<h2>Ask a Question</h2>
-		<form action="?" method="post">
-			<input type="text" class="form-control" placeholder="Question title here">
+		<form action="@routes.Questions.create" method="post">
+			<input name="title" type="text" class="form-control" placeholder="Question title here">
 			<br>
-			<textarea class="form-control" rows="8"></textarea>
+			<textarea name="text" class="form-control" rows="8"></textarea>
 			<br>
-			<div class="form-group">
-			  <label class="control-label" for="inputSuccess1">Select the Course</label>
-			  <select class="form-control" id="inputSuccess1">
-			  	
-			  </select>
-			</div>
+			<input name="tags" type="text" class="form-control" placeholder="Insert tags">
 			<br>
 			<button type="submit" class="btn btn-success btn-lg">Ask Question</button>
 		</form>

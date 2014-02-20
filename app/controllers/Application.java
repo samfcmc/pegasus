@@ -26,11 +26,6 @@ public class Application extends Controller {
     	return redirect(routes.Application.index());
     }
     
-    public static Result questionAsk() {
-        return ok(questionAsk.render());
-    }
-    
-    
 
 }
 

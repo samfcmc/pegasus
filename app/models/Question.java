@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -29,9 +31,10 @@ public class Question extends Model {
 	public List<Answer> answers;
 	
 	@ManyToMany(cascade=CascadeType.ALL)
-	public Tag tags;
+	public List<Tag> tags;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
+	//@JoinColumn(name="owner_id", referencedColumnName = "id")
 	public User owner;
 	
 	public Question(String title, String text) {
@@ -39,6 +42,16 @@ public class Question extends Model {
 		this.text = text;
 		this.rating = 0;
 		//o ID é gerado e actualizado automagicamente pelo Ebeans.
+	}
+	
+	public Question(String title, String text, List<Tag> tags) {
+		this(title, text);
+		this.tags = tags;
+	}
+	
+	public Question(String title, String text, List<Tag> tags, User user) {
+		this(title, text, tags);
+		this.owner = user;
 	}
 
 	public Long getId() {
@@ -80,7 +93,6 @@ public class Question extends Model {
 	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
 	}
-	
 	
 	 public boolean equals(Object obj) {
 	        if (obj == this) {
