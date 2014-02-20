@@ -15,6 +15,7 @@ GET		/questions/:id/edit			controllers.Questions.edit(id: Long)
 POST	/questions/:id/edit			controllers.Questions.doEdit(id: Long)
 GET		/questions/:id				controllers.Questions.show(id: Long)
 GET		/questions/:id/rate			controllers.Questions.rate(id: Long)
+GET		/tags						controllers.Tags.getTags()
 
 # Authentication
 GET		/logout						controllers.Application.logout()

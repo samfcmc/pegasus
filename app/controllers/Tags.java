@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import models.Question;
 import models.Tag;
@@ -13,8 +14,10 @@ import views.html.listQuestions;
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
 
-@Authenticated(Secured.class)
+
 public class Tags extends Controller {
+	
+	@Authenticated(Secured.class)
 	public static Result listQuestions(){
 		String username = request().username();
 		User userLogged = User.findByUsername(username);
@@ -26,5 +29,14 @@ public class Tags extends Controller {
 		
 		return ok(listQuestions.render("Questions from personal tags: ", selectedQuestions));
 
+	}
+	
+	public static Result getTags(){
+		List<Tag> tags = Ebean.find(Tag.class).findList();
+		String stringTags = "";
+		for (Tag t : tags){
+			stringTags += t.label + ",";
+		}
+		return ok(stringTags);
 	}
 }
