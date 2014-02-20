@@ -7,6 +7,7 @@ import java.util.Map;
 import models.Question;
 import models.Tag;
 import models.User;
+import models.Vote;
 
 import com.avaje.ebean.Ebean;
 
@@ -22,11 +23,30 @@ public class Questions extends Controller {
 	@Authenticated(Secured.class)
 	public static Result show(long id) {
 		Question question = Ebean.find(Question.class, id);
-		
-		if(question == null) {
+
+		if (question == null) {
 			return notFound();
 		}
-		//return ok(Json.toJson(question));
+
+		return ok(questionShow.render(question));
+	}
+
+	@Authenticated(Secured.class)
+	public static Result rate(long id) {
+		Question question = Ebean.find(Question.class, id);
+
+		if (question == null) {
+			return notFound();
+		}
+
+		String username = request().username();
+		User user = User.findByUsername(username);
+
+		
+
+		question.vote(user);
+		question.save();
+
 		return ok(questionShow.render(question));
 	}
 	

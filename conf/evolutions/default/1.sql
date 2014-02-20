@@ -16,7 +16,6 @@ create table question (
   id                        bigint auto_increment not null,
   title                     varchar(255),
   text                      varchar(255),
-  rating                    integer,
   owner_id                  bigint,
   constraint pk_question primary key (id))
 ;
@@ -36,6 +35,18 @@ create table user (
   constraint pk_user primary key (id))
 ;
 
+create table vote (
+  user_id                   bigint,
+  question_id               bigint,
+  value                     integer)
+;
+
+
+create table question_tag (
+  question_id                    bigint not null,
+  tag_id                         bigint not null,
+  constraint pk_question_tag primary key (question_id, tag_id))
+;
 
 create table question_tag (
   question_id                    bigint not null,
@@ -60,8 +71,16 @@ alter table answer add constraint fk_answer_question_2 foreign key (question_id)
 create index ix_answer_question_2 on answer (question_id);
 alter table question add constraint fk_question_owner_3 foreign key (owner_id) references user (id) on delete restrict on update restrict;
 create index ix_question_owner_3 on question (owner_id);
+alter table vote add constraint fk_vote_user_4 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_vote_user_4 on vote (user_id);
+alter table vote add constraint fk_vote_question_5 foreign key (question_id) references question (id) on delete restrict on update restrict;
+create index ix_vote_question_5 on vote (question_id);
 
 
+
+alter table question_tag add constraint fk_question_tag_question_01 foreign key (question_id) references question (id) on delete restrict on update restrict;
+
+alter table question_tag add constraint fk_question_tag_tag_02 foreign key (tag_id) references tag (id) on delete restrict on update restrict;
 
 alter table question_tag add constraint fk_question_tag_question_01 foreign key (question_id) references question (id) on delete restrict on update restrict;
 
@@ -92,6 +111,8 @@ drop table tag_question;
 drop table user;
 
 drop table user_tag;
+
+drop table vote;
 
 SET FOREIGN_KEY_CHECKS=1;
 

@@ -10,8 +10,7 @@
   			</tr>
   			<tr>
   				<td>
-  					<span class="glyphicon glyphicon-star-empty"></span>
-  					<span>@question.rating</span>
+  					<span class="glyphicon glyphicon-star-empty">@question.rating()</span>
   				</td>
   			</tr>
   			<tr>
@@ -22,16 +21,20 @@
   			<tr>
   				<td>
   					<div class="btn-group">
-    					<button type="button" class="btn btn-primary">
-    						<span class="glyphicon glyphicon-share-alt"></span>
-    						Answer
-    					</button>
+  						<a href="">
+    						<button type="button" class="btn btn-primary">
+    							<span class="glyphicon glyphicon-share-alt"></span>
+    							Answer
+    						</button>
+    					</a>
   					</div>
   					<div class="btn-group">
-    					<button type="button" class="btn btn-success">
-    						<span class="glyphicon glyphicon-thumbs-up"></span>
-    						Rate
-    					</button>
+  						<a href="@routes.Questions.rate(question.id)">
+    						<button type="button" class="btn btn-success">
+    							<span class="glyphicon glyphicon-thumbs-up"></span>
+    							Rate
+    						</button>
+    					</a>
   					</div>
   				</td>
   			</tr>
@@ -42,6 +45,16 @@
   						<tr>
   							<td>
   								<span>answer.text</span>  							
+  							</td>
+  						</tr>
+  						<tr>
+  							<td>
+  								<span>answer.owner</span>  							
+  							</td>
+  						</tr>
+  						<tr>
+  							<td>
+  								<span></span>
   							</td>
   						</tr>
   					}  					

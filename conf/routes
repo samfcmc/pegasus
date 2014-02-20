@@ -12,6 +12,7 @@ POST   /search                     controllers.Search.index()
 GET		/questions/ask				controllers.Questions.ask()
 POST	/questions/ask				controllers.Questions.create()
 GET		/questions/:id				controllers.Questions.show(id: Long)
+GET		/questions/:id/rate			controllers.Questions.rate(id: Long)
 
 # Authentication
 GET		/logout						controllers.Application.logout()

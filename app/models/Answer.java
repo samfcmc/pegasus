@@ -17,7 +17,7 @@ public class Answer extends Model {
 	public Long id;
 	
 	public String text;
-	public Integer rating;
+	public int rating;
 	//TODO datetime
 	
 	@OneToOne(cascade=CascadeType.ALL) //TODO check if dangerous with "cascade deletes"
