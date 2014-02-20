@@ -48,10 +48,22 @@ create table question_tag (
   constraint pk_question_tag primary key (question_id, tag_id))
 ;
 
+create table question_tag (
+  question_id                    bigint not null,
+  tag_id                         bigint not null,
+  constraint pk_question_tag primary key (question_id, tag_id))
+;
+
 create table tag_question (
   tag_id                         bigint not null,
   question_id                    bigint not null,
   constraint pk_tag_question primary key (tag_id, question_id))
+;
+
+create table tag_user (
+  tag_id                         bigint not null,
+  user_id                        bigint not null,
+  constraint pk_tag_user primary key (tag_id, user_id))
 ;
 
 create table user_tag (
@@ -76,9 +88,17 @@ alter table question_tag add constraint fk_question_tag_question_01 foreign key 
 
 alter table question_tag add constraint fk_question_tag_tag_02 foreign key (tag_id) references tag (id) on delete restrict on update restrict;
 
+alter table question_tag add constraint fk_question_tag_question_01 foreign key (question_id) references question (id) on delete restrict on update restrict;
+
+alter table question_tag add constraint fk_question_tag_tag_02 foreign key (tag_id) references tag (id) on delete restrict on update restrict;
+
 alter table tag_question add constraint fk_tag_question_tag_01 foreign key (tag_id) references tag (id) on delete restrict on update restrict;
 
 alter table tag_question add constraint fk_tag_question_question_02 foreign key (question_id) references question (id) on delete restrict on update restrict;
+
+alter table tag_user add constraint fk_tag_user_tag_01 foreign key (tag_id) references tag (id) on delete restrict on update restrict;
+
+alter table tag_user add constraint fk_tag_user_user_02 foreign key (user_id) references user (id) on delete restrict on update restrict;
 
 alter table user_tag add constraint fk_user_tag_user_01 foreign key (user_id) references user (id) on delete restrict on update restrict;
 
@@ -97,6 +117,8 @@ drop table question_tag;
 drop table tag;
 
 drop table tag_question;
+
+drop table tag_user;
 
 drop table user;
 
