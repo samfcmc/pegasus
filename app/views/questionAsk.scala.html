@@ -1,15 +1,43 @@
 @main("Ask a Question") {
-	<div class="ask_question_container">
-		<h2>Ask a Question</h2>
-		<form action="@routes.Questions.create" method="post">
-			<input name="title" type="text" class="form-control" placeholder="Question title here">
-			<br>
-			<textarea name="text" class="form-control" rows="8"></textarea>
-			<br>
-			<input name="tags" type="text" class="form-control" placeholder="Insert tags">
-			<br>
-			<button type="submit" class="btn btn-success btn-lg">Ask Question</button>
-		</form>
-	</div>
+<div class="ask_question_container">
+	<h2>Ask a Question</h2>
+	<form action="@routes.Questions.create" method="post">
+		<input name="title" type="text" class="form-control"
+			placeholder="Question title here"> <br>
+		<textarea name="text" class="form-control" rows="8"></textarea>
+		<br>
+		
+		<input id="tags" value="" type="text"
+			   class="demo-default" placeholder="Insert tags">
+
+		<br>
+		<button type="submit" class="btn btn-success btn-lg">Ask
+			Question</button>
+	</form>
+</div>
+
+<script> 
+
+	$ajax.(
+		{
+			url:"",
+			method:"GET",
+			success: function(tagsList){
+				$('#tags').value=tagsList;
+			}
+		}
+	)
+	
+	$('#tags').selectize({    
+    delimiter: ',',
+    persist: false,
+    create: function(input) {
+      return {
+        value: input,
+        text: input
+      }
+    }
+  });
+ </script>
 }
 
