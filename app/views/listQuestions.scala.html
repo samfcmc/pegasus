@@ -2,9 +2,11 @@
 
 @main("Welcome to Play") {
 	
-	<div>
-			<h1>Results for "@searchQuery":</h1>
-	</div>
+	@if(searchQuery != "") {
+		<div>
+				<h1>Results for "@searchQuery":</h1>
+		</div>
+	}
 	 
 	 @if(resultsSearch.length == 0){
 		<div>
@@ -17,6 +19,9 @@
 					<td>
 						<a href="@routes.Questions.show(question.id)">@question.title</a>
 					</td>					
+					<td>
+						<span>Created: @question.createdAsString()</span>
+					</td>
 					<td>
 						<span class="glyphicon glyphicon-star-empty"></span>
 					</td>
