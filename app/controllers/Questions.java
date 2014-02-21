@@ -30,6 +30,10 @@ public class Questions extends Controller {
 			return notFound();
 		}
 		
+		//To make owner username available in view
+		User owner = Ebean.find(User.class, question.owner.id);
+		question.owner = owner;
+		
 		boolean canVote = canVote(question, user);
 
 		return ok(questionShow.render(question, rating, canVote));
