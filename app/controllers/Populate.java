@@ -18,6 +18,7 @@ public class Populate extends Controller {
 		User user = new User("user1", "u1");
 
 		Question question = new Question("pergunta2", "texto da pergunta");
+		List<Question> questions = Question.find.all();
 		// user.questions.add(question);
 		question.owner = user;
 		Tag course = new Tag("Maths", "MM", "m1");
@@ -26,7 +27,7 @@ public class Populate extends Controller {
 
 		user.save();
 		question.save();
-		return ok(index.render("Success", ""));
+		return ok(index.render("Success", "", questions));
 
 	}
 }

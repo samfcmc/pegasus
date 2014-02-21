@@ -46,6 +46,6 @@ public class Search extends Controller {
 			Ebean.endTransaction();
 		}
 
-		return ok(index.render("Hello world", "Test"));
+		return ok(index.render("Hello world", "Test", null));
 	}
 }

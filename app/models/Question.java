@@ -15,6 +15,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import play.db.ebean.Model;
+import play.db.ebean.Model.Finder;
 
 @Entity
 public class Question extends Model {
@@ -26,7 +27,6 @@ public class Question extends Model {
 
 	public String title;
 	public String text;
-	// public dateTime; TODO ver do Tipo para isto.
 	public DateTime created;
 
 	@OneToMany(cascade = CascadeType.ALL)
@@ -41,6 +41,9 @@ public class Question extends Model {
 	@OneToMany(cascade = CascadeType.ALL)
 	public List<Vote> votes;
 
+	public static Finder<String, Question> find = new Finder<String, Question>(
+			String.class, Question.class);
+	
 	public Question(String title, String text, List<Tag> tags) {
 		this(title, text);
 		this.tags = tags;
@@ -66,15 +69,6 @@ public class Question extends Model {
 		votes.add(vote);
 	}
 
-	public int rating() {
-		int result = 0;
-		/*for (Vote vote : votes) {
-			result += vote.value;
-		}*/
-
-		return result;
-	}
-	
 	public String createdAsString() {
 		DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm");
 		String str = fmt.print(this.created);

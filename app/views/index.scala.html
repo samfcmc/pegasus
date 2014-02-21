@@ -1,8 +1,8 @@
-@(message: String, name: String)
+@(message: String, name: String, questions: List[Question])
 
 @main("Welcome to Play") {
 <div>
     <h1>Welcome @session.get("user")</h1>
-    <h1>@message</h1>
+    @listQuestions("", questions)
 </div>
 }
