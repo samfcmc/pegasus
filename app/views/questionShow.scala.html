@@ -42,28 +42,13 @@
   				</td>
   			</tr>
   			<!-- Answers -->
-  			<tr>
-  				<table class="table table-bordered">
   					@for(answer <- question.answers) {
-  						<tr>
-  							<td>
-  								<span>answer.text</span>  							
-  							</td>
-  						</tr>
-  						<tr>
-  							<td>
-  								<span>answer.owner</span>  							
-  							</td>
-  						</tr>
-  						<tr>
-  							<td>
-  								<span></span>
-  							</td>
-  						</tr>
-  					}  					
-  				</table>
-  			</tr>
-		</table>
+						<div class="panel panel-default">
+							<div class="panel-heading">@answer.owner</div>
+							<div class="panel-body">@answer.text</div>
+						</div>
+					}
+	</table>
 		
 	</div>
 }
