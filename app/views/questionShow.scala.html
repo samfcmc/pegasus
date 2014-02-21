@@ -29,16 +29,22 @@
     						</button>
     					</a>
   					</div>
-  					@if(canVote) {
+  					
   					<div class="btn-group">
   						<a href="@routes.Questions.rate(question.id)">
+  							@if(canVote) {
     						<button type="button" class="btn btn-success">
     							<span class="glyphicon glyphicon-thumbs-up"></span>
     							Rate
     						</button>
+    						}else{
+    						<button type="button" class="btn btn-success" disabled>
+    							<span class="glyphicon glyphicon-thumbs-up"></span>
+    							Rate
+    						</button>
+    						}
     					</a>
   					</div>
-  					}
   				</td>
   			</tr>
   			<!-- Answers -->
