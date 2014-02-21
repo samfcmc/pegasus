@@ -93,12 +93,12 @@ public class Questions extends Controller {
 
 			String title = values.get("title")[0];
 			String text = values.get("text")[0];
-			String[] tagsText = values.get("tags")[0].replaceAll("\\s+", " ")
-					.split(" ");
+			String[] tagsText = values.get("tags")[0].replaceAll("\\s+", "")
+					.split(",");
 
 			if (tagsText.length == 0
 					|| (tagsText.length == 1 && tagsText[0].equals(""))) {
-				return ok(index.render("Error: No tag sent", ""));
+				return ok(index.render("Error: No tag sent", "", null));
 			}
 
 			// Check if given tags exist
@@ -109,7 +109,7 @@ public class Questions extends Controller {
 				if (results.size() == 0) {
 					// TODO bad request - tag doesn't exist
 					return ok(index.render("Error: Tag \"" + tag
-							+ "\" doesn't exist", ""));
+							+ "\" doesn't exist", "", null));
 				} else {
 					tags.add(results.get(0));
 				}
@@ -122,7 +122,7 @@ public class Questions extends Controller {
 		} catch (NullPointerException e) {
 			return ok(index.render(
 					"Error: NullPointerException - POST paramenters missing",
-					""));
+					"", null));
 		}
 	}
 	
@@ -136,7 +136,7 @@ public class Questions extends Controller {
 		if (question == null) {
 			return notFound();
 		} else if (question.owner.id != user.id) {
-			return ok(index.render("Error: You do not own this question!", ""));
+			return ok(index.render("Error: You do not own this question!", "", null));
 		}
 
 		return ok(questionEdit.render(question));
@@ -152,7 +152,7 @@ public class Questions extends Controller {
 		if (question == null) {
 			return notFound();
 		} else if (question.owner.id != user.id) {
-			return ok(index.render("Error: You do not own this question!", ""));
+			return ok(index.render("Error: You do not own this question!", "", null));
 		}
 		
 		final Map<String, String[]> values = request().body().asFormUrlEncoded();
@@ -171,7 +171,7 @@ public class Questions extends Controller {
 		String[] tagsText = postTagsText[0].trim().replaceAll("\\s+", " ").split(" ");
 		
 		if (tagsText.length == 0 || (tagsText.length == 1 && tagsText[0].equals(""))) {
-			return ok(index.render("Error: No tag sent", ""));
+			return ok(index.render("Error: No tag sent", "", null));
 		}
 		
 		// Check if given tags exist
@@ -180,7 +180,7 @@ public class Questions extends Controller {
 			List<Tag> results = Ebean.find(Tag.class).where().eq("label", tag).findList();
 			if (results.size() == 0) {
 				// TODO bad request - tag doesn't exist
-				return ok(index.render("Error: Tag \"" + tag + "\" doesn't exist", ""));
+				return ok(index.render("Error: Tag \"" + tag + "\" doesn't exist", "", null));
 			} else {
 				tags.add(results.get(0));
 			}
