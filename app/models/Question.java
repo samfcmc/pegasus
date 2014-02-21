@@ -10,6 +10,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import play.db.ebean.Model;
 
 @Entity
@@ -23,6 +27,7 @@ public class Question extends Model {
 	public String title;
 	public String text;
 	// public dateTime; TODO ver do Tipo para isto.
+	public DateTime created;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	public List<Answer> answers;
@@ -52,6 +57,7 @@ public class Question extends Model {
 		this.answers = new ArrayList<Answer>();
 		this.tags = new ArrayList<Tag>();
 		this.votes = new ArrayList<Vote>();
+		this.created = DateTime.now();
 	}
 
 	public void vote(User user) {
@@ -67,6 +73,13 @@ public class Question extends Model {
 		}*/
 
 		return result;
+	}
+	
+	public String createdAsString() {
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm");
+		String str = fmt.print(this.created);
+		
+		return str;
 	}
 
 	public boolean equals(Object obj) {

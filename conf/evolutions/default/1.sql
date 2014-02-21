@@ -16,6 +16,7 @@ create table question (
   id                        bigint auto_increment not null,
   title                     varchar(255),
   text                      varchar(255),
+  created                   datetime,
   owner_id                  bigint,
   constraint pk_question primary key (id))
 ;
