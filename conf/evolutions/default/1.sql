@@ -12,6 +12,7 @@ create table admin (
 create table answer (
   id                        bigint auto_increment not null,
   text                      varchar(255),
+  created                   datetime,
   owner_id                  bigint,
   question_id               bigint,
   constraint pk_answer primary key (id))

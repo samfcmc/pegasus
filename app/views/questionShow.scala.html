@@ -20,14 +20,6 @@
 		<tr>
 			<td>
 				<div class="btn-group">
-					<a href="">
-						<button type="button" class="btn btn-primary">
-							<span class="glyphicon glyphicon-share-alt"></span> Answer
-						</button>
-					</a>
-				</div>
-
-				<div class="btn-group">
 					@if(canVote) { 
 					<a href="@routes.Questions.rate(question.id)">
 						<button type="button" class="btn btn-success">
@@ -44,25 +36,42 @@
 		</tr>
 	</table>
 	<!-- Answers -->
-	@for(answer <- question.answers) {
-		<div class="panel panel-default">
-			<div class="panel-heading">@answer.owner.userName</div>
-			<div class="panel-body">@answer.text</div>
-		</div>
-	}
-		
-	<!-- Form to answer -->
-	@helper.form(action = routes.Answers.create(question.id)) {
-    	
-	   	<div class="form-group">
-	   		@helper.textarea(form("text"),
-	   			'class -> "form-control",
-	   			'_label -> "Answer")
-	   	</div>
-	    	
-    	<button type="submit" class="btn btn-default">Answer</button>
-	}
 	
-
+	<div>
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<!-- Form to answer -->
+				@helper.form(action = routes.Answers.create(question.id)) {
+			    	
+				   	<div class="form-group">
+				   		@helper.textarea(form("text"),
+				   			'class -> "form-control",
+				   			'_label -> "Answer")
+				   	</div>
+				    	
+			    	<button type="submit" class="btn btn-primary">
+						<span class="glyphicon glyphicon-share-alt"></span> Answer
+					</button>
+				}
+			</div>
+		</div>
+	</div>
+	
+	<div>
+		@for(answer <- question.answers) {
+			<div class="panel panel-default">
+				<div class="panel-heading">@answer.owner.userName @answer.createdAsString()
+					<span class="glyphicon glyphicon-star-empty">0</span>
+					<a href="@routes.Questions.rate(question.id)">
+						<span class="glyphicon glyphicon-thumbs-up">Rate</span>
+					</a>
+				</div>
+				<div class="panel-body">
+					@answer.text
+				</div>
+			</div>
+		}
+	</div>
+		
 </div>
 }
