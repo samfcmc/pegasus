@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import models.Tag;
@@ -25,6 +27,7 @@ public class Search extends Controller {
     					Expr.like("text", "%" + searchQuery + "%")
     					)
 			.findList();
+    	Collections.sort(results, new Question.QuestionComparator());
     	return ok(listQuestions.render(searchQuery, results));
     }
 

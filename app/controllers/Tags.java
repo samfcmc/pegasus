@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import models.Question;
@@ -25,7 +26,7 @@ public class Tags extends Controller {
 		for (Tag t : userLogged.favouriteTags){
 			selectedQuestions.addAll(t.questions);
 		}
-		
+		Collections.sort(selectedQuestions, new Question.QuestionComparator());
 		return ok(listQuestions.render("Questions from personal tags: ", selectedQuestions));
 	}
 	

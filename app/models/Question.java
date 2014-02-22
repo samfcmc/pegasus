@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -89,5 +90,31 @@ public class Question extends Model {
 
 	public int hashCode() {
 		return this.id.hashCode();
+	}
+	
+	public static class QuestionComparator implements Comparator{
+  		public int compare(Question question1, Question question2) {
+			if(question1 == null || question2 == null) {
+				return 0;
+			}
+			if(question1.created.isBefore(question2.created)) {
+				return 1;
+			}
+			if(question1.created.isEqual(question2.created)) {
+				return 0;
+			}
+			else {
+				return -1;
+			}
+		}
+
+		@Override
+		public int compare(Object o1, Object o2) throws UnsupportedOperationException {
+			
+			if (o1 instanceof Question && o2 instanceof Question){
+				return compare((Question)o1, (Question)o2);
+			}
+			else throw new UnsupportedOperationException("QuestionComparator: compare: arguments are not of type Question. ");
+		}
 	}
 }

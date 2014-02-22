@@ -1,76 +1,19 @@
-@main("Ask a Question") {
-<div class="ask_question_container">
-	<h2>Ask a Question</h2>
-	<form action="@routes.Questions.create" method="post">
-		<input name="title" type="text" class="form-control"
-			placeholder="Question title here"> <br>
-		<textarea name="text" class="form-control" rows="8"></textarea>
-		<br>
-		<div class="ui-widget">
-			<input name="tags" id="tags" type="text" class="form-control"
-				placeholder="Insert tags">
-		</div>
-		<br>
-		<button type="submit" class="btn btn-success btn-lg">Ask
-			Question</button>
-	</form>
-</div>
+@(newQuestionForm: Form[Question])
 
-<script>
-	$(function() {
-		$.ajax({
-			url : "@routes.Tags.getAllTags()",
-			method : "GET",
-			success : function(result) {
-				initTags(result);
-			}
-		});
-
-		
-		function split(val) {
-			return val.split(/,\s*/);
-		}
-		function extractLast(term) {
-			return split(term).pop();
-		}
-		function initTags(result) {
-			var availableTags = result.split(",");
-			$("#tags")
-					// don't navigate away from the field on tab when selecting an item
-					.bind(
-							"keydown",
-							function(event) {
-								if (event.keyCode === $.ui.keyCode.TAB
-										&& $(this).data("ui-autocomplete").menu.active) {
-									event.preventDefault();
-								}
-							}).autocomplete(
-							{
-								minLength : 0,
-								source : function(request, response) {
-									// delegate back to autocomplete, but extract the last term
-									response($.ui.autocomplete.filter(
-											availableTags,
-											extractLast(request.term)));
-								},
-								focus : function() {
-									// prevent value inserted on focus
-									return false;
-								},
-								select : function(event, ui) {
-									var terms = split(this.value);
-									// remove the current input
-									terms.pop();
-									// add the selected item
-									terms.push(ui.item.value);
-									// add placeholder to get the comma-and-space at the end
-									terms.push("");
-									this.value = terms.join(", ");
-									return false;
-								}
-							});
-		}
-	});
-</script>
-}
-
+@main("Create a new question"){
+	
+	@helper.form(action = routes.Questions.create()) {
+	   
+	   <div class="form-group">
+	   		@helper.inputText(newQuestionForm("title"), 'class -> "form-control", '_label -> "title", 'placeholder -> "Question title here")
+	   </div>
+	   
+	   <div class="form-group">
+	   		 @helper.inputText(newQuestionForm("text"), 'class -> "form-control", '_label -> "text", 'placeholder -> "Question title here")
+	   </div> 
+	    
+	   <button type="submit" class="btn btn-default"> Ask. </button>
+	   
+	 }
+ 
+ }
