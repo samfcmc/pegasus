@@ -1,60 +1,54 @@
-@(question: Question, rating: Int, canVote: Boolean)
+@(question: Question, rating: Int, canVote: Boolean) @main("Question") {
+<div>
+	<table class="table table-striped">
+		<tr>
+			<td>
+				<h2>@question.title</h2>
+			</td>
+		</tr>
+		<tr>
+			<td><span>By: @question.owner.userName at
+					@question.createdAsString()</span> <span
+				class="glyphicon glyphicon-star-empty">@rating</span></td>
+		</tr>
+		<tr>
+			<td>
+				<p>@question.text</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="btn-group">
+					<a href="">
+						<button type="button" class="btn btn-primary">
+							<span class="glyphicon glyphicon-share-alt"></span> Answer
+						</button>
+					</a>
+				</div>
 
-@main("Question") {
-	<div>
-		<table class="table table-striped">
-  			<tr>
-  				<td>
-  					<h2>@question.title</h2>
-  				</td>
-  			</tr>
-  			<tr>
-  				<td>
-  					<span>By: @question.owner.userName at @question.createdAsString()</span>
-  					<span class="glyphicon glyphicon-star-empty">@rating</span>
-  				</td>
-  			</tr>
-  			<tr>
-  				<td>
-  					<p>@question.text</p>
-  				</td>
-  			</tr>
-  			<tr>
-  				<td>
-  					<div class="btn-group">
-  						<a href="">
-    						<button type="button" class="btn btn-primary">
-    							<span class="glyphicon glyphicon-share-alt"></span>
-    							Answer
-    						</button>
-    					</a>
-  					</div>
-  					
-  					<div class="btn-group">
-  						<a href="@routes.Questions.rate(question.id)">
-  							@if(canVote) {
-    						<button type="button" class="btn btn-success">
-    							<span class="glyphicon glyphicon-thumbs-up"></span>
-    							Rate
-    						</button>
-    						}else{
-    						<button type="button" class="btn btn-success" disabled>
-    							<span class="glyphicon glyphicon-thumbs-up"></span>
-    							Rate
-    						</button>
-    						}
-    					</a>
-  					</div>
-  				</td>
-  			</tr>
-  			<!-- Answers -->
-  					@for(answer <- question.answers) {
-						<div class="panel panel-default">
-							<div class="panel-heading">@answer.owner</div>
-							<div class="panel-body">@answer.text</div>
-						</div>
+				<div class="btn-group">
+					@if(canVote) { 
+					<a href="@routes.Questions.rate(question.id)">
+						<button type="button" class="btn btn-success">
+							<span class="glyphicon glyphicon-thumbs-up"></span> Rate
+						</button> 
+					</a>						
+					}else{
+						<button type="button" class="btn btn-success" disabled="disabled">
+							<span class="glyphicon glyphicon-thumbs-up"></span> Rate
+						</button>
 					}
+				</div>
+			</td>
+		</tr>
+		<!-- Answers -->
+		@for(answer <- question.answers) {
+		<div class="panel panel-default">
+			<div class="panel-heading">@answer.owner</div>
+			<div class="panel-body">@answer.text</div>
+		</div>
+		}
 	</table>
-		
-	</div>
+
+</div>
 }
