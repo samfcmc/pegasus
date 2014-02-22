@@ -9,29 +9,18 @@
 		</tr>
 		<tr>
 			<td><span>By: @question.owner.userName at
-					@question.createdAsString()</span> <span
-				class="glyphicon glyphicon-star-empty">@rating</span></td>
-		</tr>
-		<tr>
-			<td>
-				<p>@question.text</p>
+					@question.createdAsString()</span> 
+				<span class="glyphicon glyphicon-star-empty">@rating</span>
+				@if(canVote) { 
+					<a href="@routes.Questions.rate(question.id)">
+						<span class="glyphicon glyphicon-star-empty">Rate</span>
+					</a>
+				}
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<div class="btn-group">
-					@if(canVote) { 
-					<a href="@routes.Questions.rate(question.id)">
-						<button type="button" class="btn btn-success">
-							<span class="glyphicon glyphicon-thumbs-up"></span> Rate
-						</button> 
-					</a>						
-					}else{
-						<button type="button" class="btn btn-success" disabled="disabled">
-							<span class="glyphicon glyphicon-thumbs-up"></span> Rate
-						</button>
-					}
-				</div>
+				<p>@question.text</p>
 			</td>
 		</tr>
 	</table>
@@ -61,9 +50,9 @@
 		@for(answer <- question.answers) {
 			<div class="panel panel-default">
 				<div class="panel-heading">@answer.owner.userName @answer.createdAsString()
-					<span class="glyphicon glyphicon-star-empty">0</span>
-					<a href="@routes.Questions.rate(question.id)">
-						<span class="glyphicon glyphicon-thumbs-up">Rate</span>
+					<span class="glyphicon glyphicon-star-empty">@answer.rating()</span>
+					<a href="@routes.Answers.rate(answer.id)">
+						<span class="glyphicon glyphicon-star-empty">Rate</span>
 					</a>
 				</div>
 				<div class="panel-body">

@@ -18,6 +18,7 @@ GET		/questions/:id/rate			controllers.Questions.rate(id: Long)
 
 # Answers
 POST	/questions/:id/answer		controllers.Answers.create(id: Long)
+GET		/answers/:id/rate			controllers.Answers.rate(id: Long)
 
 # Tags
 GET		/tags						controllers.Tags.getAllTags()

@@ -39,7 +39,7 @@ public class Question extends Model {
 	public User owner;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	public List<Vote> votes;
+	public List<QuestionVote> votes;
 
 	public static Finder<Long, Question> find = new Finder<Long, Question>(
 			Long.class, Question.class);
@@ -59,12 +59,12 @@ public class Question extends Model {
 		this.text = text;
 		this.answers = new ArrayList<Answer>();
 		this.tags = new ArrayList<Tag>();
-		this.votes = new ArrayList<Vote>();
+		this.votes = new ArrayList<QuestionVote>();
 		this.created = DateTime.now();
 	}
 
 	public void vote(User user) {
-		Vote vote = new Vote(user, this);
+		QuestionVote vote = new QuestionVote(user, this);
 		vote.save();
 		votes.add(vote);
 	}

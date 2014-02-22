@@ -9,7 +9,7 @@ import models.Answer;
 import models.Question;
 import models.Tag;
 import models.User;
-import models.Vote;
+import models.QuestionVote;
 
 import com.avaje.ebean.Ebean;
 
@@ -51,11 +51,11 @@ public class Questions extends Controller {
 	}
 
 	public static int rating(Question question) {
-		List<Vote> votes = Ebean.find(Vote.class).where()
+		List<QuestionVote> votes = Ebean.find(QuestionVote.class).where()
 				.eq("question", question).findList();
 		int result = 0;
 
-		for (Vote vote : votes) {
+		for (QuestionVote vote : votes) {
 			result += vote.value;
 		}
 
@@ -63,7 +63,7 @@ public class Questions extends Controller {
 	}
 
 	private static boolean canVote(Question question, User user) {
-		Vote vote = Ebean.find(Vote.class).where().eq("user", user)
+		QuestionVote vote = Ebean.find(QuestionVote.class).where().eq("user", user)
 				.eq("question", question).findUnique();
 
 		return vote == null;
