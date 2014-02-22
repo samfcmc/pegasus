@@ -30,6 +30,7 @@ public class Tags extends Controller {
 		return ok(listQuestions.render("Questions from personal tags: ", selectedQuestions));
 	}
 	
+	@Authenticated(Secured.class)
 	public static Result getAllTags() {
 		List<Tag> tags = Tag.find.all();
 		String result = "";

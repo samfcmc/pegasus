@@ -3,6 +3,7 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.SimpleFormatter;
 
 import models.Question;
 import models.Tag;
@@ -12,6 +13,7 @@ import models.Vote;
 import com.avaje.ebean.Ebean;
 
 import play.data.Form;
+import play.data.format.Formatters;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
@@ -24,37 +26,38 @@ public class Questions extends Controller {
 		Question question = Ebean.find(Question.class, id);
 		String username = request().username();
 		User user = User.findByUsername(username);
-		
+
 		int rating = rating(question);
-		
+
 		if (question == null) {
 			return notFound();
 		}
-		
-		//To make owner username available in view
+
+		// To make owner username available in view
 		User owner = Ebean.find(User.class, question.owner.id);
 		question.owner = owner;
-		
+
 		boolean canVote = canVote(question, user);
 
 		return ok(questionShow.render(question, rating, canVote));
 	}
-	
+
 	private static int rating(Question question) {
-		List<Vote> votes = Ebean.find(Vote.class).where().eq("question", question).findList();
+		List<Vote> votes = Ebean.find(Vote.class).where()
+				.eq("question", question).findList();
 		int result = 0;
-		
-		for(Vote vote : votes) {
+
+		for (Vote vote : votes) {
 			result += vote.value;
 		}
-		
+
 		return result;
 	}
-	
+
 	private static boolean canVote(Question question, User user) {
 		Vote vote = Ebean.find(Vote.class).where().eq("user", user)
 				.eq("question", question).findUnique();
-		
+
 		return vote == null;
 	}
 
@@ -70,150 +73,158 @@ public class Questions extends Controller {
 		User user = User.findByUsername(username);
 
 		boolean canVote = canVote(question, user);
-		
+
 		if (canVote) {
 			question.vote(user);
 			question.save();
 			int rating = rating(question);
 			return ok(questionShow.render(question, rating, false));
 		}
-		
+
 		return forbidden();
 
 	}
 
 	public static Result ask() {
-		Form<Question> newQuestionForm = new Form<Question>(Question.class);
-		return ok(questionAsk.render(newQuestionForm));
+		return ok(questionAsk.render("","","",""));
 	}
 
+	
+	
 	@Authenticated(Secured.class)
 	public static Result create() {
-		Form<Question> newQuestionForm = new Form<Question>(Question.class);
-		Question newQuestion = newQuestionForm.bindFromRequest().get();
-		
-//		if (newQuestion.tags.size() == 0){
-//			//TODO retornar erro. "Error: No tag sent"
-//		}
-//		else{
-//			if ()){
-//				
-//			}
-//			
-//		}
-		
-//		if 
-//		String username = request().username();
-//		User user = User.findByUsername(username);
-//
-//		final Map<String, String[]> values = request().body()
-//				.asFormUrlEncoded();
-//
-//		try {
-//
-//			String title = values.get("title")[0];
-//			String text = values.get("text")[0];
-//			String[] tagsText = values.get("tags")[0].replaceAll("\\s+", "")
-//					.split(",");
-//
-//			if (tagsText.length == 0
-//					|| (tagsText.length == 1 && tagsText[0].equals(""))) {
-//				return ok(index.render("Error: No tag sent", "", null));
-//			}
+		// Form<Question> newQuestionForm = new Form<Question>(Question.class);
+		// Question newQuestion = newQuestionForm.bindFromRequest().get();
 
-			// Check if given tags exist
-//			List<Tag> tags = new ArrayList<Tag>();
-//			for (String tag : tagsText) {
-//				List<Tag> results = Ebean.find(Tag.class).where()
-//						.eq("label", tag).findList();
-//				if (results.size() == 0) {
-//					// TODO bad request - tag doesn't exist
-//					return ok(index.render("Error: Tag \"" + tag
-//							+ "\" doesn't exist", "", null));
-//				} else {
-//					tags.add(results.get(0));
-//				}
-//			}
+		String username = request().username();
+		User user = User.findByUsername(username);
 
-//			Question question = new Question(title, text, tags, user);
-//			question.save();
+		final Map<String, String[]> values = request().body()
+				.asFormUrlEncoded();
 
-		return ok("title: "+ newQuestion.title +", Text: "+ newQuestion.text);
-//			return redirect(controllers.routes.Questions.show(question.id));
-//		} catch (NullPointerException e) {
-//			return ok(index.render(
-//					"Error: NullPointerException - POST paramenters missing",
-//					"", null));
-//		}
+			String titleForm= "", textForm = "", tagsForm = "";
+			
+			if (values.get("title") != null){
+				titleForm = values.get("title")[0];
+				if (titleForm.isEmpty()){
+					return ok(questionAsk.render("title can't be empty", titleForm, textForm, tagsForm));	
+				}
+			}else{
+				return ok(questionAsk.render("title can't be null", titleForm, textForm, tagsForm));
+				
+			}
+			
+			if (values.get("text") != null){
+				textForm = values.get("text")[0];
+				if (textForm.isEmpty()){
+					return ok(questionAsk.render("text can't be empty", titleForm, textForm, tagsForm));	
+				}
+			}else{
+				return ok(questionAsk.render("text can't be null", titleForm, textForm, tagsForm));	
+			}
+			
+			String[] tagsText;
+			if (values.get("tags") != null){
+				tagsText = values.get("tags")[0].replaceAll("\\s+", "")
+						.split(",");
+				if (tagsText.length == 0 || (tagsText.length == 1 && tagsText[0].equals(""))) {
+					return ok(questionAsk.render("tags can't be null or empty", titleForm, textForm, tagsForm));	
+				}else{
+					// Check if given tags exist
+					List<Tag> tags = new ArrayList<Tag>();
+					for (String tag : tagsText) {
+						Tag tagSearched = Ebean.find(Tag.class).where()
+								.eq("label", tag).findUnique();
+						if (tagSearched == null) {
+							// TODO bad request - tag doesn't exist
+							return ok(questionAsk.render("Error: Tag \"" + tag
+									+ "\" doesn't exist", titleForm, textForm, tagsForm ));
+						} else {
+							tags.add(tagSearched);
+						}
+					}
+					Question newQuestion = new Question(titleForm, textForm, tags, user);
+					newQuestion.save();
+					return redirect(controllers.routes.Questions.show(newQuestion.id));
+				}
+			}
+			return ok("Error: tags can't be null.");
 	}
-	
+
 	@Authenticated(Secured.class)
 	public static Result edit(long id) {
 		String username = request().username();
 		User user = User.findByUsername(username);
-		
+
 		Question question = Ebean.find(Question.class, id);
-		
+
 		if (question == null) {
 			return notFound();
 		} else if (question.owner.id != user.id) {
-			return ok(index.render("Error: You do not own this question!", "", null));
+			return ok(index.render("Error: You do not own this question!", "",
+					null));
 		}
 
 		return ok(questionEdit.render(question));
 	}
-	
+
 	@Authenticated(Secured.class)
 	public static Result doEdit(long id) {
 		String username = request().username();
 		User user = User.findByUsername(username);
-		
+
 		Question question = Ebean.find(Question.class, id);
-		
+
 		if (question == null) {
 			return notFound();
 		} else if (question.owner.id != user.id) {
-			return ok(index.render("Error: You do not own this question!", "", null));
+			return ok(index.render("Error: You do not own this question!", "",
+					null));
 		}
-		
-		final Map<String, String[]> values = request().body().asFormUrlEncoded();
-		
+
+		final Map<String, String[]> values = request().body()
+				.asFormUrlEncoded();
+
 		String[] postTitle = values.get("title");
 		String[] postText = values.get("text");
 		String[] postTagsText = values.get("tags");
-		
+
 		if (postTitle == null || postText == null || postTagsText == null) {
 			// FIXME show error page
 			return ok("Could not get all needed parameters", "");
 		}
-		
+
 		String title = postTitle[0];
 		String text = postText[0];
-		String[] tagsText = postTagsText[0].trim().replaceAll("\\s+", " ").split(" ");
-		
-		if (tagsText.length == 0 || (tagsText.length == 1 && tagsText[0].equals(""))) {
+		String[] tagsText = postTagsText[0].trim().replaceAll("\\s+", " ")
+				.split(" ");
+
+		if (tagsText.length == 0
+				|| (tagsText.length == 1 && tagsText[0].equals(""))) {
 			return ok(index.render("Error: No tag sent", "", null));
 		}
-		
+
 		// Check if given tags exist
 		List<Tag> tags = new ArrayList<Tag>();
 		for (String tag : tagsText) {
-			List<Tag> results = Ebean.find(Tag.class).where().eq("label", tag).findList();
+			List<Tag> results = Ebean.find(Tag.class).where().eq("label", tag)
+					.findList();
 			if (results.size() == 0) {
 				// TODO bad request - tag doesn't exist
-				return ok(index.render("Error: Tag \"" + tag + "\" doesn't exist", "", null));
+				return ok(index.render("Error: Tag \"" + tag
+						+ "\" doesn't exist", "", null));
 			} else {
 				tags.add(results.get(0));
 			}
 		}
-		
+
 		question.title = title;
 		question.text = text;
 		question.tags = tags;
-		
+
 		question.save();
-		
+
 		return redirect(controllers.routes.Questions.show(question.id));
 	}
-	
+
 }
