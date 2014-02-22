@@ -83,14 +83,12 @@ public class User extends Model {
 			user.refreshToken = userConfig.getRefreshToken();
 		}
 
-		//setUserCoursesFromAPI(user);
-
 		user.save();
 
 		return user;
 	}
 
-	private static void setUserCoursesFromAPI(User user){
+	/*private static void setUserCoursesFromAPI(User user){
 		FenixEduClient client = FenixEduClientQAFactory.getSingleton();
 		FenixEduUserConfig userConfig = user.getFenixEduUserConfig();
 		
@@ -109,7 +107,7 @@ public class User extends Model {
 				user.favouriteTags.add(course);
 			}
 		}
-	}
+	}*/
 
 	public static User findByUsername(String username) {
 		User user = find.where().eq("userName", username).findUnique();

@@ -37,7 +37,7 @@ public class Search extends Controller {
 		Question question = new Question("pergunta1", "texto da pergunta");
 		user.questions.add(question);
 
-		Tag course = new Tag("Maths", "M", "m1");
+		Tag course = new Tag("Maths", "Tag description");
 		course.questions.add(question);
 		course.save();
 

@@ -1,0 +1,21 @@
+@(form: Form[TagRequest])
+
+@main("Create a new tag") {
+	
+	@helper.form(action = routes.TagRequests.create()) {
+    	
+    	<div class="form-group">
+    		@helper.inputText(form("tagLabel"), 
+    			'class -> "form-control",
+    			'_label -> "Label")
+    	</div>
+    	
+    	<div class="form-group">
+    		@helper.textarea(form("tagDescription"),
+    			'class -> "form-control",
+    			'_label -> "Description")
+    	</div>
+    	
+    	<button type="submit" class="btn btn-default">Request this tag</button>
+	}
+}

@@ -19,8 +19,17 @@ GET		/questions/:id/rate			controllers.Questions.rate(id: Long)
 # Tags
 GET		/tags						controllers.Tags.getAllTags()
 
+# Tag requests
+GET		/tags/create				controllers.TagRequests.requestTag()
+POST	/tags/create				controllers.TagRequests.create()
+GET		/tags/accept/:id			controllers.TagRequests.accept(id: Long)
+GET		/tags/reject/:id			controllers.TagRequests.reject(id: Long)
+
 # Authentication
 GET		/logout						controllers.Application.logout()
+
+# Backoffice
+GET		/admin						controllers.TagRequests.getAllTagRequests()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
