@@ -1,4 +1,5 @@
-@(question: Question, rating: Int, canVote: Boolean, form: Form[Answer]) 
+@(question: Question, rating: Int, canVote: Boolean,
+	form: Form[Answer], topAnswer: Answer, topRating: Int) 
 @main("Question") {
 <div>
 	<table class="table table-striped">
@@ -24,7 +25,29 @@
 			</td>
 		</tr>
 	</table>
-	<!-- Answers -->
+	
+	@if(topRating > 0) {
+		<!-- Top answer -->
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				<span>Top answer</span>
+			</div>
+			<div class="panel-body">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						@topAnswer.owner.userName @topAnswer.createdAsString()
+						<span class="glyphicon glyphicon-star-empty">@topRating</span>
+						<a href="@routes.Answers.rate(topAnswer.id)">
+							<span class="glyphicon glyphicon-star-empty">Rate</span>
+						</a>
+					</div>
+					<div class="panel-body">
+						@topAnswer.text
+					</div>
+				</div>
+			</div>
+		</div>
+	}	
 	
 	<div>
 		<div class="panel panel-default">
@@ -46,6 +69,7 @@
 		</div>
 	</div>
 	
+	<!-- Answers -->
 	<div>
 		@for(answer <- question.answers) {
 			<div class="panel panel-default">

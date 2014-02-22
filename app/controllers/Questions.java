@@ -35,19 +35,29 @@ public class Questions extends Controller {
 			return notFound();
 		}
 		
-		//Get answers owners
+		Answer topAnswer = null;
+		int topRating = 0;
+		//Get answers owners and Top answer
 		for(Answer answer: question.answers) {
 			User owner = User.find.byId(answer.owner.id);
 			answer.owner = owner;
+			int answerRating = answer.rating();
+			
+			if(answerRating > topRating) {
+				topAnswer = answer;
+				topRating = answerRating;
+			}
 		}
 		
 		// To make owner username available in view
 		User owner = Ebean.find(User.class, question.owner.id);
 		question.owner = owner;
+		
+		
 
 		boolean canVote = canVote(question, user);
 
-		return ok(questionShow.render(question, rating, canVote, form));
+		return ok(questionShow.render(question, rating, canVote, form, topAnswer, topRating));
 	}
 
 	public static int rating(Question question) {
