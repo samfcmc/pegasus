@@ -3,6 +3,12 @@
 
 # --- !Ups
 
+create table admin (
+  id                        bigint auto_increment not null,
+  user_id                   bigint,
+  constraint pk_admin primary key (id))
+;
+
 create table answer (
   id                        bigint auto_increment not null,
   text                      varchar(255),
@@ -24,7 +30,16 @@ create table question (
 create table tag (
   id                        bigint auto_increment not null,
   label                     varchar(255),
+  description               varchar(255),
   constraint pk_tag primary key (id))
+;
+
+create table tag_request (
+  id                        bigint auto_increment not null,
+  tag_label                 varchar(255),
+  tag_description           varchar(255),
+  requester_id              bigint,
+  constraint pk_tag_request primary key (id))
 ;
 
 create table user (
@@ -66,16 +81,20 @@ create table user_tag (
   tag_id                         bigint not null,
   constraint pk_user_tag primary key (user_id, tag_id))
 ;
-alter table answer add constraint fk_answer_owner_1 foreign key (owner_id) references user (id) on delete restrict on update restrict;
-create index ix_answer_owner_1 on answer (owner_id);
-alter table answer add constraint fk_answer_question_2 foreign key (question_id) references question (id) on delete restrict on update restrict;
-create index ix_answer_question_2 on answer (question_id);
-alter table question add constraint fk_question_owner_3 foreign key (owner_id) references user (id) on delete restrict on update restrict;
-create index ix_question_owner_3 on question (owner_id);
-alter table vote add constraint fk_vote_user_4 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_vote_user_4 on vote (user_id);
-alter table vote add constraint fk_vote_question_5 foreign key (question_id) references question (id) on delete restrict on update restrict;
-create index ix_vote_question_5 on vote (question_id);
+alter table admin add constraint fk_admin_user_1 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_admin_user_1 on admin (user_id);
+alter table answer add constraint fk_answer_owner_2 foreign key (owner_id) references user (id) on delete restrict on update restrict;
+create index ix_answer_owner_2 on answer (owner_id);
+alter table answer add constraint fk_answer_question_3 foreign key (question_id) references question (id) on delete restrict on update restrict;
+create index ix_answer_question_3 on answer (question_id);
+alter table question add constraint fk_question_owner_4 foreign key (owner_id) references user (id) on delete restrict on update restrict;
+create index ix_question_owner_4 on question (owner_id);
+alter table tag_request add constraint fk_tag_request_requester_5 foreign key (requester_id) references user (id) on delete restrict on update restrict;
+create index ix_tag_request_requester_5 on tag_request (requester_id);
+alter table vote add constraint fk_vote_user_6 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_vote_user_6 on vote (user_id);
+alter table vote add constraint fk_vote_question_7 foreign key (question_id) references question (id) on delete restrict on update restrict;
+create index ix_vote_question_7 on vote (question_id);
 
 
 
@@ -99,6 +118,8 @@ alter table user_tag add constraint fk_user_tag_tag_02 foreign key (tag_id) refe
 
 SET FOREIGN_KEY_CHECKS=0;
 
+drop table admin;
+
 drop table answer;
 
 drop table question;
@@ -110,6 +131,8 @@ drop table tag;
 drop table tag_question;
 
 drop table tag_user;
+
+drop table tag_request;
 
 drop table user;
 

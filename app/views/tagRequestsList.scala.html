@@ -1,0 +1,23 @@
+@(tagRequests: List[TagRequest])
+
+@main("Requested tags") {
+	<table class="table table-striped">
+  		@for(request <- tagRequests) {
+  			<tr>
+  				<td>@request.tagLabel</td>
+  				<td>@request.tagDescription</td>
+  				<td>@request.requester.userName</td>
+  				<td>
+  					<div class="btn-group">
+  						<a href="@routes.TagRequests.accept(request.id)">
+  							<button type="button" class="btn btn-success">Accept</button>
+  						</a>
+  						<a href="@routes.TagRequests.reject(request.id)">
+  							<button type="button" class="btn btn-danger">Reject</button>
+  						</a>
+  					</div>
+  				</td>
+  			</tr>
+  		}
+	</table>
+}

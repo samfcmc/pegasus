@@ -20,8 +20,7 @@ public class Tag extends Model {
 	public Long id;
 	
 	public String label = "";
-//	public String fenixId;
-//	public String acronym;
+	public String description;
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	public List<Question> questions;
@@ -29,11 +28,11 @@ public class Tag extends Model {
 	@ManyToMany(cascade=CascadeType.ALL/*, mappedBy = "favouriteTags"*/)
 	public List<User> users;
 	
-	public Tag(String name, String acronym, String fenixId) {
-//		this.fenixId = fenixId;
-//		this.acronym = acronym;
+	public Tag(String name, String description) {
 		this.label = name;
+		this.description = description;
 		this.questions = new ArrayList<Question>();
+		this.users = new ArrayList<User>();
 	}
 
 	public void add(Question question) {
