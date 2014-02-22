@@ -17,21 +17,18 @@ public class Answer extends Model {
 	public Long id;
 	
 	public String text;
-	public int rating;
 	//TODO datetime
 	
-	@OneToOne(cascade=CascadeType.ALL) //TODO check if dangerous with "cascade deletes"
+	@OneToOne(cascade=CascadeType.ALL) 
 	public User owner;
 
-	@ManyToOne(cascade=CascadeType.ALL) //TODO check if dangerous with "cascade deletes"
+	@ManyToOne(cascade=CascadeType.ALL)
 	public Question question;
 	
 	public Answer(Long id, String text, Integer rating){
 		this.id = id;
 		this.text = text;
-		this.rating = rating;
 	}
-	
 	
 	public Long getId() {
 		return id;
@@ -47,13 +44,5 @@ public class Answer extends Model {
 
 	public void setText(String text) {
 		this.text = text;
-	}
-
-	public Integer getRating() {
-		return rating;
-	}
-
-	public void setRating(Integer rating) {
-		this.rating = rating;
 	}
 }

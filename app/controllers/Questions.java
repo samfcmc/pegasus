@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.SimpleFormatter;
 
+import models.Answer;
 import models.Question;
 import models.Tag;
 import models.User;
@@ -26,6 +27,7 @@ public class Questions extends Controller {
 		Question question = Ebean.find(Question.class, id);
 		String username = request().username();
 		User user = User.findByUsername(username);
+		Form<Answer> form = new Form<>(Answer.class);
 
 		int rating = rating(question);
 
@@ -39,7 +41,7 @@ public class Questions extends Controller {
 
 		boolean canVote = canVote(question, user);
 
-		return ok(questionShow.render(question, rating, canVote));
+		return ok(questionShow.render(question, rating, canVote, form));
 	}
 
 	private static int rating(Question question) {
@@ -64,7 +66,8 @@ public class Questions extends Controller {
 	@Authenticated(Secured.class)
 	public static Result rate(long id) {
 		Question question = Ebean.find(Question.class, id);
-
+		Form<Answer> form = new Form<>(Answer.class);
+		
 		if (question == null) {
 			return notFound();
 		}
@@ -78,7 +81,7 @@ public class Questions extends Controller {
 			question.vote(user);
 			question.save();
 			int rating = rating(question);
-			return ok(questionShow.render(question, rating, false));
+			return ok(questionShow.render(question, rating, false, form));
 		}
 
 		return forbidden();

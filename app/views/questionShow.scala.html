@@ -1,4 +1,5 @@
-@(question: Question, rating: Int, canVote: Boolean) @main("Question") {
+@(question: Question, rating: Int, canVote: Boolean, form: Form[Answer]) 
+@main("Question") {
 <div>
 	<table class="table table-striped">
 		<tr>
@@ -41,14 +42,27 @@
 				</div>
 			</td>
 		</tr>
-		<!-- Answers -->
-		@for(answer <- question.answers) {
+	</table>
+	<!-- Answers -->
+	@for(answer <- question.answers) {
 		<div class="panel panel-default">
 			<div class="panel-heading">@answer.owner</div>
 			<div class="panel-body">@answer.text</div>
 		</div>
-		}
-	</table>
+	}
+		
+	<!-- Form to answer -->
+	@helper.form(action = routes.Answers.create(question.id)) {
+    	
+	   	<div class="form-group">
+	   		@helper.textarea(form("text"),
+	   			'class -> "form-control",
+	   			'_label -> "Answer")
+	   	</div>
+	    	
+    	<button type="submit" class="btn btn-default">Answer</button>
+	}
+	
 
 </div>
 }

@@ -16,7 +16,6 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import play.db.ebean.Model;
-import play.db.ebean.Model.Finder;
 
 @Entity
 public class Question extends Model {
@@ -42,8 +41,8 @@ public class Question extends Model {
 	@OneToMany(cascade = CascadeType.ALL)
 	public List<Vote> votes;
 
-	public static Finder<String, Question> find = new Finder<String, Question>(
-			String.class, Question.class);
+	public static Finder<Long, Question> find = new Finder<Long, Question>(
+			Long.class, Question.class);
 	
 	public Question(String title, String text, List<Tag> tags) {
 		this(title, text);

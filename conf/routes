@@ -16,6 +16,9 @@ POST	/questions/:id/edit			controllers.Questions.doEdit(id: Long)
 GET		/questions/:id				controllers.Questions.show(id: Long)
 GET		/questions/:id/rate			controllers.Questions.rate(id: Long)
 
+# Answers
+POST	/questions/:id/answer		controllers.Answers.create(id: Long)
+
 # Tags
 GET		/tags						controllers.Tags.getAllTags()
 
