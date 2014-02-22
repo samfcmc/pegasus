@@ -34,7 +34,13 @@ public class Questions extends Controller {
 		if (question == null) {
 			return notFound();
 		}
-
+		
+		//Get answers owners
+		for(Answer answer: question.answers) {
+			User owner = User.find.byId(answer.owner.id);
+			answer.owner = owner;
+		}
+		
 		// To make owner username available in view
 		User owner = Ebean.find(User.class, question.owner.id);
 		question.owner = owner;
@@ -44,7 +50,7 @@ public class Questions extends Controller {
 		return ok(questionShow.render(question, rating, canVote, form));
 	}
 
-	private static int rating(Question question) {
+	public static int rating(Question question) {
 		List<Vote> votes = Ebean.find(Vote.class).where()
 				.eq("question", question).findList();
 		int result = 0;
@@ -66,7 +72,6 @@ public class Questions extends Controller {
 	@Authenticated(Secured.class)
 	public static Result rate(long id) {
 		Question question = Ebean.find(Question.class, id);
-		Form<Answer> form = new Form<>(Answer.class);
 		
 		if (question == null) {
 			return notFound();
@@ -81,7 +86,7 @@ public class Questions extends Controller {
 			question.vote(user);
 			question.save();
 			int rating = rating(question);
-			return ok(questionShow.render(question, rating, false, form));
+			return redirect(routes.Questions.show(id));
 		}
 
 		return forbidden();

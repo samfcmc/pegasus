@@ -46,7 +46,7 @@
 	<!-- Answers -->
 	@for(answer <- question.answers) {
 		<div class="panel panel-default">
-			<div class="panel-heading">@answer.owner</div>
+			<div class="panel-heading">@answer.owner.userName</div>
 			<div class="panel-body">@answer.text</div>
 		</div>
 	}
