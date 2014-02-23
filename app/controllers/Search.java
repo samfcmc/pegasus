@@ -11,6 +11,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.listQuestions;
 import views.html.index;
+import views.html.searchQuestions;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
@@ -28,7 +29,7 @@ public class Search extends Controller {
     					)
 			.findList();
     	Collections.sort(results, new Question.QuestionComparator());
-    	return ok(listQuestions.render(searchQuery, results));
+    	return ok(searchQuestions.render(searchQuery, results));
     }
 
 	public static Result populate() {

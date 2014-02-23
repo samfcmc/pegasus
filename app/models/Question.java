@@ -116,4 +116,16 @@ public class Question extends Model {
 			else throw new UnsupportedOperationException("QuestionComparator: compare: arguments are not of type Question. ");
 		}
 	}
+	
+	public int rating() {
+		votes = QuestionVote.find.where().eq("question", this).findList();
+		int rating = 0;
+		
+		for(QuestionVote vote : votes) {
+			rating += vote.value;
+		}
+		
+		return rating;
+		
+	}
 }

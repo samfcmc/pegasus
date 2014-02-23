@@ -1,29 +1,17 @@
 @(searchQuery: String, resultsSearch: List[Question])
 
-@if(searchQuery != "") {
-	<div>
-			<h1>Results for "@searchQuery":</h1>
-	</div>
-}
-	 
- @if(resultsSearch.length == 0){
-	<div>
-		<h4>No results.</h4>
-	</div>
-}else{
-	<table class="table-striped table">
-		@for(question <- resultsSearch){
-			<tr>
-				<td>
-					<a href="@routes.Questions.show(question.id)">@question.title</a>
-				</td>					
-				<td>
-					<span>Created: @question.createdAsString()</span>
-				</td>
-				<td>
-					<span class="glyphicon glyphicon-star-empty"></span>
-				</td>
-				</tr>
+@main("Search", "home") {
+	@if(searchQuery != "") {
+		<div>
+				<h1>Results for "@searchQuery":</h1>
+		</div>
 	}
-	</table>
+	 
+ 	@if(resultsSearch.length == 0){
+		<div>
+			<h4>No results.</h4>
+		</div>
+	}else{
+		@listQuestions("", resultsSearch)
+	}
 }

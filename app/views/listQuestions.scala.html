@@ -1,5 +1,17 @@
 @(searchQuery: String, resultsSearch: List[Question])
 
-@main("Welcome to Play", "") {
-	@searchQuestions(searchQuery, resultsSearch)
-}
+	<table class="table-striped table">
+		@for(question <- resultsSearch){
+			<tr>
+				<td>
+					<a href="@routes.Questions.show(question.id)">@question.title</a>
+				</td>					
+				<td>
+					<span>Created: @question.createdAsString()</span>
+				</td>
+				<td>
+					<span class="glyphicon glyphicon-star-empty">@question.rating()</span>
+				</td>
+				</tr>
+		}
+	</table>
