@@ -48,6 +48,7 @@ public class TagRequests extends Controller {
 		TagRequest tagRequest = Ebean.find(TagRequest.class, id);
 		String tagLabel = tagRequest.tagLabel;
 		String tagDescription = tagRequest.tagDescription;
+		String tagNameFenix = tagRequest.tagNameFenix;
 
 		Tag tagFind = Tag.find.where().eq("label", tagLabel).findUnique();
 
@@ -55,7 +56,7 @@ public class TagRequests extends Controller {
 			return forbidden("Tag already exists");
 		}
 
-		Tag tag = new Tag(tagLabel, tagDescription);
+		Tag tag = new Tag(tagLabel, tagDescription, tagNameFenix);
 
 		tag.save();
 		tagRequest.delete();
