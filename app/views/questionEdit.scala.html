@@ -1,6 +1,6 @@
 @(question: Question)
 
-@main("Edit a Question") {
+@main("Edit a Question", "") {
 	<div class="edit_question_container">
 		<h2>Edit this Question</h2>
 		<form action="@routes.Questions.doEdit(question.id)" method="post">

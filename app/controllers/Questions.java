@@ -53,7 +53,9 @@ public class Questions extends Controller {
 		User owner = Ebean.find(User.class, question.owner.id);
 		question.owner = owner;
 		
+		List<Tag> questionTags = Tag.find.where().filterMany("questions").eq("id", question.id).findList();
 		
+		question.tags = questionTags;
 
 		boolean canVote = canVote(question, user);
 

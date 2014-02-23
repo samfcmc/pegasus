@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(title: String, active: String)(content: Html)
 
 <!DOCTYPE html>
 
@@ -40,9 +40,10 @@
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav" role="listQuestions">
-					<li class="active"><a href="@routes.Application.index()">Home</a></li>
-					<li><a href="@routes.Tags.listQuestions()">My Courses</a></li>
-					<li><a href="@routes.Questions.ask()">Ask a question</a></li>
+					<li id="home"><a href="@routes.Application.index()">Home</a></li>
+					<!-- <li id="my_tags"><a href="@routes.Tags.listQuestions()">My Courses</a></li>  -->
+					<li id="new_tag"><a href="@routes.TagRequests.create()">Request a new tag</a></li>
+					<li id="ask"><a href="@routes.Questions.ask()">Ask a question</a></li>
 				</ul>
 				<form class="navbar-form navbar-left" role="search" action="@routes.Search.index()" method="get">
 					<div class="form-group">
@@ -70,6 +71,14 @@
 		<!-- Bootstrap JS -->
 		<!-- Last thing to load to make page loading faster -->
 		<script src="@routes.Assets.at("bootstrap/js/bootstrap.min.js")"></script>
+		<script type="text/javascript">
+			@if(active != "") {
+				$(function() {
+					console.log("Test");
+					$("#@active").addClass('active');
+				});
+			}
+		</script>
 	</div>
 </body>
 </html>

@@ -1,6 +1,6 @@
 @(question: Question, rating: Int, canVote: Boolean,
 	form: Form[Answer], topAnswer: Answer, topRating: Int) 
-@main("Question") {
+@main("Question", "") {
 <div>
 	<table class="table table-striped">
 		<tr>
@@ -17,6 +17,16 @@
 						<span class="glyphicon glyphicon-star-empty">Rate</span>
 					</a>
 				}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<span>Tags:</span>
+				<div class="btn-group btn-group-xs">
+					@for(tag <- question.tags) {
+						<button type="button" class="btn btn-default">@tag.label</button>
+					}
+				</div>
 			</td>
 		</tr>
 		<tr>
