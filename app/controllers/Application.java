@@ -44,6 +44,11 @@ public class Application extends Controller {
     		session("user", user.userName);
     	}
     	
+    	for(Question question : questions) {
+    		User owner = User.find.byId(question.owner.id);
+    		question.owner = owner;
+    	}
+    	
         return ok(index.render("Hello world", name, questions));
     }
     

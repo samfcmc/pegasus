@@ -43,6 +43,7 @@ create table tag (
   id                        bigint auto_increment not null,
   label                     varchar(255),
   description               varchar(255),
+  name_fenix                varchar(255),
   constraint pk_tag primary key (id))
 ;
 
@@ -50,6 +51,7 @@ create table tag_request (
   id                        bigint auto_increment not null,
   tag_label                 varchar(255),
   tag_description           varchar(255),
+  tag_name_fenix            varchar(255),
   requester_id              bigint,
   constraint pk_tag_request primary key (id))
 ;

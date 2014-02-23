@@ -100,7 +100,7 @@ public class User extends Model {
 		
 		for (FenixEnrolment c : courses.getEnrolments()){
 				String acronymFenix = c.getAcronym();
-//				acronymFenix = acronymFenix.replaceAll("[0-9]+", "");
+				acronymFenix = acronymFenix.replaceAll("[0-9]+", "");
 				
 				String nameFenix = c.getName();
 				String descriptionFenix = "Subject at IST. \n" + "Acronym: "+ c.getAcronym() +"\n"+
@@ -122,10 +122,12 @@ public class User extends Model {
 					}
 				}else{
 					newSubject = new Tag(acronymFenix, descriptionFenix, nameFenix);
+					newSubject.save();
+					user.favouriteTags.add(newSubject);
 				}
 				
 			
-				user.favouriteTags.add(newSubject);
+				
 		}
 		
 		for (FenixCourse c : courses.getTeaching()){

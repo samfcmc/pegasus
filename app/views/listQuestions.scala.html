@@ -5,6 +5,9 @@
 			<tr>
 				<td>
 					<a href="@routes.Questions.show(question.id)">@question.title</a>
+				</td>
+				<td>
+					<span>@question.owner.userName</span>
 				</td>					
 				<td>
 					<span>Created: @question.createdAsString()</span>

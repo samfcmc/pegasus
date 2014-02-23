@@ -24,7 +24,7 @@ public class Questions extends Controller {
 
 	@Authenticated(Secured.class)
 	public static Result show(long id) {
-		Question question = Ebean.find(Question.class, id);
+		Question question = Question.find.byId(id);
 		String username = request().username();
 		User user = User.findByUsername(username);
 		Form<Answer> form = new Form<Answer>(Answer.class);
@@ -53,9 +53,9 @@ public class Questions extends Controller {
 		User owner = Ebean.find(User.class, question.owner.id);
 		question.owner = owner;
 		
-		List<Tag> questionTags = Tag.find.where().filterMany("questions").eq("id", question.id).findList();
+		//List<Tag> questionTags = Tag.find.where().filterMany("questions").eq("id", question.id).findList();
 		
-		question.tags = questionTags;
+		//question.tags = questionTags;
 
 		boolean canVote = canVote(question, user);
 
