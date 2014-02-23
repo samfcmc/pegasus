@@ -26,8 +26,9 @@ public class Search extends Controller {
     					Expr.like("title", "%" + searchQuery + "%"), 
     					Expr.like("text", "%" + searchQuery + "%")
     					)
-			.findList();
-    	Collections.sort(results, new Question.QuestionComparator());
+			.order().desc("created")
+    		.findList();
+//    	Collections.sort(results, new Question.QuestionComparator());
     	return ok(listQuestions.render(searchQuery, results));
     }
 

@@ -42,7 +42,7 @@ public class User extends Model {
 	public List<Answer> answers;
 
 	@ManyToMany(cascade=CascadeType.ALL)
-	public List<Tag> favouriteTags;
+	public List<Tag> favouriteTags = new ArrayList<Tag>();
 	
 	public static Finder<String, User> find = new Finder<String, User>(
 			String.class, User.class);
