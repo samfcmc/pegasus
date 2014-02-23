@@ -14,6 +14,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
 @Entity
@@ -24,6 +25,7 @@ public class Answer extends Model {
 	@Id
 	public Long id;
 	
+	@Required
 	public String text;
 	
 	public DateTime created;

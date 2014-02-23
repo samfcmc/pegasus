@@ -59,7 +59,7 @@ public class Questions extends Controller {
 
 		return ok(questionShow.render(question, rating, canVote, form, topAnswer, topRating));
 	}
-
+	
 	public static int rating(Question question) {
 		List<QuestionVote> votes = Ebean.find(QuestionVote.class).where()
 				.eq("question", question).findList();
@@ -146,7 +146,7 @@ public class Questions extends Controller {
 				tagsText = values.get("tags")[0].replaceAll("\\s+", "")
 						.split(",");
 				if (tagsText.length == 0 || (tagsText.length == 1 && tagsText[0].equals(""))) {
-					return ok(questionAsk.render("tags can't be null or empty", titleForm, textForm, tagsForm));	
+					return ok(questionAsk.render("tags can't empty", titleForm, textForm, tagsForm));	
 				}else{
 					// Check if given tags exist
 					List<Tag> tags = new ArrayList<Tag>();

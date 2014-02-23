@@ -4,6 +4,7 @@
 
 <div class="ask_question_container">
 	<h2>Ask a Question</h2>
+	<p>@errorMessage</p>
 	<form action="@routes.Questions.create" method="post">
 		
 		<input name="title" type="text" class="form-control"
@@ -18,7 +19,6 @@
 		<div class="ui-widget">
 			<input name="tags" id="tags" type="text" class="form-control"
 				placeholder="Insert tags" value="@tags">
-				@errorMessage
 		</div>
 		
 		<br>

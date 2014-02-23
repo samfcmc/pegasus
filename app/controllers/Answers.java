@@ -12,13 +12,18 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
 import views.html.questionShow;
+import views.html.helper.form;
 
 public class Answers extends Controller {
 	
 	@Authenticated(Secured.class)
 	public static Result create(long id) {
-		Form<Answer> form = new Form<Answer>(Answer.class);
-		Answer answer = form.bindFromRequest().get();
+		Form<Answer> answerForm = new Form<Answer>(Answer.class);
+		Answer answer = answerForm.bindFromRequest().get();
+		
+		if(answerForm.hasErrors()) {
+			return redirect(routes.Questions.show(id));
+		}
 		
 		Question question = Question.find.byId(id);
 		
