@@ -27,11 +27,11 @@ public class Questions extends Controller {
 		Question question = Ebean.find(Question.class, id);
 		String username = request().username();
 		User user = User.findByUsername(username);
-		Form<Answer> form = new Form<>(Answer.class);
+		Form<Answer> form = new Form<Answer>(Answer.class);
 
 		int rating = rating(question);
 
-		if (question == null) {
+		if (question == null) {	
 			return notFound();
 		}
 		
@@ -125,20 +125,20 @@ public class Questions extends Controller {
 			if (values.get("title") != null){
 				titleForm = values.get("title")[0];
 				if (titleForm.isEmpty()){
-					return ok(questionAsk.render("title can't be empty", titleForm, textForm, tagsForm));	
+					return ok(questionAsk.render("Error: Title can't be empty", titleForm, textForm, tagsForm));	
 				}
 			}else{
-				return ok(questionAsk.render("title can't be null", titleForm, textForm, tagsForm));
+				return ok(questionAsk.render("Error: Title can't be null", titleForm, textForm, tagsForm));
 				
 			}
 			
 			if (values.get("text") != null){
 				textForm = values.get("text")[0];
 				if (textForm.isEmpty()){
-					return ok(questionAsk.render("text can't be empty", titleForm, textForm, tagsForm));	
+					return ok(questionAsk.render("Error: Text can't be empty", titleForm, textForm, tagsForm));	
 				}
 			}else{
-				return ok(questionAsk.render("text can't be null", titleForm, textForm, tagsForm));	
+				return ok(questionAsk.render("Error: Text can't be null", titleForm, textForm, tagsForm));	
 			}
 			
 			String[] tagsText;
@@ -146,7 +146,7 @@ public class Questions extends Controller {
 				tagsText = values.get("tags")[0].replaceAll("\\s+", "")
 						.split(",");
 				if (tagsText.length == 0 || (tagsText.length == 1 && tagsText[0].equals(""))) {
-					return ok(questionAsk.render("tags can't empty", titleForm, textForm, tagsForm));	
+					return ok(questionAsk.render("Error: Tags can't be empty", titleForm, textForm, tagsForm));	
 				}else{
 					// Check if given tags exist
 					List<Tag> tags = new ArrayList<Tag>();
@@ -156,7 +156,7 @@ public class Questions extends Controller {
 						if (tagSearched == null) {
 							// TODO bad request - tag doesn't exist
 							return ok(questionAsk.render("Error: Tag \"" + tag
-									+ "\" doesn't exist", titleForm, textForm, tagsForm ));
+									+ "\" doesn't exist. Try to request that as a new tag.", titleForm, textForm, tagsForm ));
 						} else {
 							tags.add(tagSearched);
 						}
@@ -166,7 +166,7 @@ public class Questions extends Controller {
 					return redirect(controllers.routes.Questions.show(newQuestion.id));
 				}
 			}
-			return ok("Error: tags can't be null.");
+			return ok(questionAsk.render("Error: Tags can't be null", titleForm, textForm, tagsForm ));
 	}
 
 	@Authenticated(Secured.class)
