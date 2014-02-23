@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Expr;
+
 import play.db.ebean.Model;
 import pt.ist.fenixedu.sdk.FenixEduClient;
 import pt.ist.fenixedu.sdk.FenixEduUserConfig;
@@ -82,23 +85,47 @@ public class User extends Model {
 			user.accessToken = userConfig.getAccessToken();
 			user.refreshToken = userConfig.getRefreshToken();
 		}
-
+		setUserCoursesFromAPI(user);
+		
 		user.save();
 
 		return user;
 	}
 
-	/*private static void setUserCoursesFromAPI(User user){
+	private static void setUserCoursesFromAPI(User user){
 		FenixEduClient client = FenixEduClientQAFactory.getSingleton();
 		FenixEduUserConfig userConfig = user.getFenixEduUserConfig();
 		
 		FenixPersonCourses courses = client.getPersonCourses("2013/2014", userConfig); //FIXME academicTerm
 		
 		for (FenixEnrolment c : courses.getEnrolments()){
-			if (Tag.findByFenixId(c.getId()) == null){
-				Tag course = new Tag(c.getName(), c.getAcronym(), c.getId());
-				user.favouriteTags.add(course);
-			}
+				String acronymFenix = c.getAcronym();
+//				acronymFenix = acronymFenix.replaceAll("[0-9]+", "");
+				
+				String nameFenix = c.getName();
+				String descriptionFenix = "Subject at IST. \n" + "Acronym: "+ c.getAcronym() +"\n"+
+						"ID: "+ c.getId() +"\n"+ "Name in fénix: "+ c.getName() + "\n"+
+						"URL of subject: " + c.getUrl();
+				
+		
+				
+				List<Tag> listTagUnderTest = Tag.find.where(Expr.eq("label", acronymFenix)).findList();
+				
+				Tag newSubject = null;
+				//when at least one tag already exists with that label
+				if (listTagUnderTest.size() != 0){
+					for (Tag t : listTagUnderTest){
+//						t.label = t.label + "{" + t.nameFenix + "}";
+//						newSubject = new Tag(acronymFenix+ "{" + t.nameFenix + "}", descriptionFenix, nameFenix);
+//						t.save();
+//						newSubject.save();
+					}
+				}else{
+					newSubject = new Tag(acronymFenix, descriptionFenix, nameFenix);
+				}
+				
+			
+				user.favouriteTags.add(newSubject);
 		}
 		
 		for (FenixCourse c : courses.getTeaching()){
@@ -107,7 +134,7 @@ public class User extends Model {
 				user.favouriteTags.add(course);
 			}
 		}
-	}*/
+	}
 
 	public static User findByUsername(String username) {
 		User user = find.where().eq("userName", username).findUnique();

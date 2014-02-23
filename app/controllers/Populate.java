@@ -21,7 +21,7 @@ public class Populate extends Controller {
 		List<Question> questions = Question.find.all();
 		// user.questions.add(question);
 		question.owner = user;
-		Tag course = new Tag("Maths", "Tag description");
+		Tag course = new Tag("Maths", "Cadeira de matemática de secundário", "Mathematics.");
 		course.add(question);
 		course.save();
 

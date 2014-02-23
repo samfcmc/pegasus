@@ -23,9 +23,12 @@ public class Tags extends Controller {
 		User userLogged = User.findByUsername(username);
 		ArrayList<Question> selectedQuestions = new ArrayList<Question>();
 		
-		for (Tag t : userLogged.favouriteTags){
-			selectedQuestions.addAll(t.questions);
-		}
+		List<Tag> userTags = new ArrayList<Tag>();
+		userTags = userLogged.favouriteTags;
+		if (userTags.size() != 0)
+			for (Tag t : userTags){
+				selectedQuestions.addAll(t.questions);
+			}
 		Collections.sort(selectedQuestions, new Question.QuestionComparator());
 		return ok(listQuestions.render("Questions from personal tags: ", selectedQuestions));
 	}

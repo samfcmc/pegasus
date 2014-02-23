@@ -19,6 +19,7 @@ public class TagRequest extends Model {
 
 	public String tagLabel;
 	public String tagDescription;
+	public String tagNameFenix;
 	
 	@ManyToOne()
 	public User requester;
@@ -28,16 +29,17 @@ public class TagRequest extends Model {
 	
 	
 	
-	public TagRequest(String tagLabel, String tagDescription) {
+	public TagRequest(String tagLabel, String tagDescription, String tagNameFenix) {
 		super();
 		this.tagLabel = tagLabel;
 		this.tagDescription = tagDescription;
+		this.tagNameFenix = tagNameFenix;
 	}
 
 
 
-	public TagRequest(String tagLabel, String tagDescription, User requester) {
-		this(tagLabel, tagDescription);
+	public TagRequest(String tagLabel, String tagDescription, String tagNameFenix, User requester) {
+		this(tagLabel, tagDescription, tagNameFenix);
 		this.requester = requester;
 	}
 	

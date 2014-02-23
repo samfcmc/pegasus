@@ -20,7 +20,9 @@ public class Tag extends Model {
 	public Long id;
 	
 	public String label = "";
-	public String description;
+	public String description = "";
+	
+	public String nameFenix ="";
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	public List<Question> questions;
@@ -28,23 +30,30 @@ public class Tag extends Model {
 	@ManyToMany(cascade=CascadeType.ALL/*, mappedBy = "favouriteTags"*/)
 	public List<User> users;
 	
-	public Tag(String name, String description) {
-		this.label = name;
+//	public Tag(String label, String description) {
+//		this.label = label;
+//		this.description = description;
+//		this.questions = new ArrayList<Question>();
+//		this.users = new ArrayList<User>();
+//	}
+
+	public Tag(String labelAcronym, String description, String nameFenix) {
+		this.label = labelAcronym;
 		this.description = description;
 		this.questions = new ArrayList<Question>();
 		this.users = new ArrayList<User>();
+		this.nameFenix = nameFenix;
 	}
-
 	public void add(Question question) {
 		this.questions.add(question);
 	}
 	
 	public static Finder<String, Tag> find = new Finder<String, Tag>(
 			String.class,
-			Tag.class); 
-	
-	public static Tag findByFenixId(String fenixId){
-		return find.where().eq("fenixId", fenixId).findUnique();
-	}
+			Tag.class);
+
+	public static Object findByFenixId(String id) {
+		return null;
+	} 
 }
 
