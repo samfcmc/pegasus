@@ -36,28 +36,40 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="@routes.Application.index()">Q&A Fénix</a>
+				<div class="navbar-collapse collapse">
+					<a class="navbar-brand" href="@routes.Application.index()">Pegasus [Beta]</a>
+				</div>
 			</div>
 			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav" role="listQuestions">
-					<li id="home"><a href="@routes.Application.index()">Home</a></li>
-					<!-- <li id="my_tags"><a href="@routes.Tags.listQuestions()">My Courses</a></li>  -->
-					<li id="new_tag"><a href="@routes.TagRequests.create()">Request a new tag</a></li>
-					<li id="ask"><a href="@routes.Questions.ask()">Ask a question</a></li>
+				<ul class="nav navbar-nav">
+					<li id="add" class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="@routes.TagRequests.create()">
+							<span class="glyphicon glyphicon-plus"></span>
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li id="new_tag">
+								<a href="@routes.TagRequests.create()">Request a new tag</a>
+							</li>
+							<li id="ask">
+								<a href="@routes.Questions.ask()">Ask a question</a>
+							</li>
+						</ul>
+					</li>
 				</ul>
 				<form class="navbar-form navbar-left" role="search" action="@routes.Search.index()" method="get">
 					<div class="form-group">
 						<input type="text" name="searchString" class="form-control" placeholder="Search">
 					</div>
-					<button type="submit" class="btn btn-default">Search</button>
+					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
 				</form>
 				<ul class="nav navbar-nav navbar-right">
 				@if(session.get("user")) {
 					<li><a href="">@session.get("user")</a></li>
-					<li><a href="@routes.Application.logout()">Logout</a></li>
+					<li><a href="@routes.Application.logout()"><span class ="glyphicon glyphicon-log-out"></span></a></li>
 				} else {
 					
-					<li><a href="@fenixedu.Constants.loginURL">Login</a></li>
+					<li><a href="@fenixedu.Constants.loginURL"><span class="glyphicon glyphicon-log-in"></span></a></li>
 				}
 				</ul>
 			</div>
@@ -74,7 +86,6 @@
 		<script type="text/javascript">
 			@if(active != "") {
 				$(function() {
-					console.log("Test");
 					$("#@active").addClass('active');
 				});
 			}
