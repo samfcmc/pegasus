@@ -3,7 +3,6 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.SimpleFormatter;
 
 import models.Answer;
 import models.Question;
@@ -14,7 +13,6 @@ import models.QuestionVote;
 import com.avaje.ebean.Ebean;
 
 import play.data.Form;
-import play.data.format.Formatters;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
