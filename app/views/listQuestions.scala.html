@@ -1,6 +1,6 @@
 @(searchQuery: String, resultsSearch: List[Question])
 
-	<table class="table-striped table">
+<table class="table-striped table" xmlns="http://www.w3.org/1999/html">
 		@for(question <- resultsSearch){
 			<tr>
 				<td>
@@ -8,9 +8,22 @@
 				</td>
 				<td>
 					<span>@question.owner.userName</span>
-				</td>					
+				</td>
 				<td>
-					<span>Created: @question.createdAsString()</span>
+					<span id="created-date-@question.id">Created:
+                        <script type="text/javascript">
+                            $(function() {
+                                var date = '@question.createdAsString()';
+                                var lastweek = moment().subtract('days',7);
+                                var qdate = moment(date, 'DD/MM/YYYY HH:mm');
+                                if(qdate.isBefore(lastweek)) {
+                                    $("#created-date-@question.id").append(date);
+                                } else {
+                                    $("#created-date-@question.id").append(qdate.fromNow());
+                                }
+                            });
+                        </script>
+                    </span>
 				</td>
 				<td>
 					<span class="glyphicon glyphicon-star-empty">@question.rating()</span>

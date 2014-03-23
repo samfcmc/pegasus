@@ -9,8 +9,20 @@
 			</td>
 		</tr>
 		<tr>
-			<td><span>By: @question.owner.userName at
-					@question.createdAsString()</span> 
+			<td><span id="created-date-@question.id">By: @question.owner.userName
+					<script type="text/javascript">
+                        $(function() {
+                            var date = '@question.createdAsString()';
+                            var lastweek = moment().subtract('days',7);
+                            var qdate = moment(date, 'DD/MM/YYYY HH:mm');
+                            if(qdate.isBefore(lastweek)) {
+                                $("#created-date-@question.id").append('at ' + date);
+                            } else {
+                                $("#created-date-@question.id").append(qdate.fromNow());
+                            }
+                        });
+                    </script>
+                </span>
 				<span class="glyphicon glyphicon-star-empty">@rating</span>
 				@if(canVote) { 
 					<a href="@routes.Questions.rate(question.id)">
@@ -45,7 +57,20 @@
 			<div class="panel-body">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						@topAnswer.owner.userName @topAnswer.createdAsString()
+						@topAnswer.owner.userName
+                        <span id="created-date-top-@topAnswer.id"></span>
+                        <script type="text/javascript">
+                        $(function() {
+                            var date = '@topAnswer.createdAsString()';
+                            var lastweek = moment().subtract('days',7);
+                            var qdate = moment(date, 'DD/MM/YYYY HH:mm');
+                            if(qdate.isBefore(lastweek)) {
+                                $("#created-date-top-@topAnswer.id").append('at ' + date);
+                            } else {
+                                $("#created-date-top-@topAnswer.id").append(qdate.fromNow());
+                            }
+                        });
+                    </script>
 						<span class="glyphicon glyphicon-star-empty">@topRating</span>
 						<a href="@routes.Answers.rate(topAnswer.id)">
 							<span class="glyphicon glyphicon-star-empty">Rate</span>
@@ -83,7 +108,20 @@
 	<div>
 		@for(answer <- question.answers) {
 			<div class="panel panel-default">
-				<div class="panel-heading">@answer.owner.userName @answer.createdAsString()
+				<div class="panel-heading">@answer.owner.userName
+                    <span id="created-date-a-@answer.id"></span>
+                    <script type="text/javascript">
+                        $(function() {
+                            var date = '@answer.createdAsString()';
+                            var lastweek = moment().subtract('days',7);
+                            var qdate = moment(date, 'DD/MM/YYYY HH:mm');
+                            if(qdate.isBefore(lastweek)) {
+                                $("#created-date-a-@answer.id").append('at ' + date);
+                            } else {
+                                $("#created-date-a-@answer.id").append(qdate.fromNow());
+                            }
+                        });
+                    </script>
 					<span class="glyphicon glyphicon-star-empty">@answer.rating()</span>
 					<a href="@routes.Answers.rate(answer.id)">
 						<span class="glyphicon glyphicon-star-empty">Rate</span>
