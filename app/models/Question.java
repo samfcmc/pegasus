@@ -55,8 +55,12 @@ public class Question extends Model {
 	}
 
 	public Question(String title, String text) {
+		this();
 		this.title = title;
 		this.text = text;
+	}
+	
+	public Question() {
 		this.answers = new ArrayList<Answer>();
 		this.tags = new ArrayList<Tag>();
 		this.votes = new ArrayList<QuestionVote>();
