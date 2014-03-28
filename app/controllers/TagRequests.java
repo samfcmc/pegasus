@@ -18,7 +18,12 @@ public class TagRequests extends Controller {
 
 	@Authenticated(Secured.class)
 	public static Result create() {
-		Form<TagRequest> form = new Form<TagRequest>(TagRequest.class);
+		Form<TagRequest> form = new Form<TagRequest>(TagRequest.class).bindFromRequest();
+		
+		if(form.hasErrors()) {
+			return badRequest(tagCreate.render(form));
+		}
+		
 		TagRequest tagRequest = form.bindFromRequest().get();
 
 		// Check if the tag already exists or request has already been done
