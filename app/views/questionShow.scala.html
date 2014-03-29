@@ -1,90 +1,56 @@
 @(question: Question, rating: Int, canVote: Boolean,
 	form: Form[Answer], topAnswer: Answer, topRating: Int) 
 @main("Question", "") {
-<div>
-	<table class="table table-striped">
-		<tr>
-			<td>
-				<h2>@question.title</h2>
-			</td>
-		</tr>
-		<tr>
-			<td><span id="created-date-@question.id">By: @question.owner.userName
-					<script type="text/javascript">
-                        $(function() {
-                            var date = '@question.createdAsString()';
-                            var lastweek = moment().subtract('days',7);
-                            var qdate = moment(date, 'DD/MM/YYYY HH:mm');
-                            if(qdate.isBefore(lastweek)) {
-                                $("#created-date-@question.id").append('at ' + date);
-                            } else {
-                                $("#created-date-@question.id").append(qdate.fromNow());
-                            }
-                        });
-                    </script>
-                </span>
-				<span class="glyphicon glyphicon-star-empty">@rating</span>
-				@if(canVote) { 
-					<a href="@routes.Questions.rate(question.id)">
-						<span class="glyphicon glyphicon-star-empty">Rate</span>
-					</a>
-				}
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<span>Tags:</span>
-				<div class="btn-group btn-group-xs">
+
+<div class="container">
+	<div class="panel panel-default panel-primary">
+		<div class="panel-heading">
+    		<h3 class="panel-title">@question.title</h3>
+  		</div>
+  		<div class="panel-body">
+  			<p>
+  				<span>@question.text</span>
+  			</p>
+    		<p>
+    			<div class="btn-group btn-group-xs">
 					@for(tag <- question.tags) {
 						<button type="button" class="btn btn-default">@tag.label</button>
 					}
 				</div>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<p>@question.text</p>
-			</td>
-		</tr>
-	</table>
-	
-	@if(topRating > 0) {
+			</p>
+  		</div>
+  		<div class="panel-footer">
+  			<p align="right">
+  				<span>@question.owner.userName</span>
+  				<span data-date="@question.createdAsString()"></span>
+  				<span class="glyphicon glyphicon-star-empty">@rating</span>
+				@if(canVote) { 
+					<a href="@routes.Questions.rate(question.id)">Rate</a>
+				}
+  			</p>	
+  		</div>
+	</div>
+
+		@if(topRating > 0) {
 		<!-- Top answer -->
-		<div class="panel panel-success">
-			<div class="panel-heading">
-				<span>Top answer</span>
-			</div>
-			<div class="panel-body">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						@topAnswer.owner.userName
-                        <span id="created-date-top-@topAnswer.id"></span>
-                        <script type="text/javascript">
-                        $(function() {
-                            var date = '@topAnswer.createdAsString()';
-                            var lastweek = moment().subtract('days',7);
-                            var qdate = moment(date, 'DD/MM/YYYY HH:mm');
-                            if(qdate.isBefore(lastweek)) {
-                                $("#created-date-top-@topAnswer.id").append('at ' + date);
-                            } else {
-                                $("#created-date-top-@topAnswer.id").append(qdate.fromNow());
-                            }
-                        });
-                    </script>
+			<div class="panel panel-success">
+				<div class="panel-heading">
+					<span>Top Answer</span>
+				</div>
+				<div class="panel-body">
+					<p>@topAnswer.text</p>
+				</div>
+				<div class="panel-footer">
+					<p align="right">
+						<span>@topAnswer.owner.userName</span>
+						<span data-date="@topAnswer.createdAsString()"></span>
 						<span class="glyphicon glyphicon-star-empty">@topRating</span>
-						<a href="@routes.Answers.rate(topAnswer.id)">
-							<span class="glyphicon glyphicon-star-empty">Rate</span>
-						</a>
-					</div>
-					<div class="panel-body">
-						@topAnswer.text
-					</div>
+						<a href="@routes.Answers.rate(topAnswer.id)">Rate</a>
+					</p>
 				</div>
 			</div>
-		</div>
-	}	
-	
-	<div>
+		}		
+
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<!-- Form to answer -->
@@ -102,37 +68,23 @@
 				}
 			</div>
 		</div>
-	</div>
-	
-	<!-- Answers -->
-	<div>
-		@for(answer <- question.answers) {
-			<div class="panel panel-default">
-				<div class="panel-heading">@answer.owner.userName
-                    <span id="created-date-a-@answer.id"></span>
-                    <script type="text/javascript">
-                        $(function() {
-                            var date = '@answer.createdAsString()';
-                            var lastweek = moment().subtract('days',7);
-                            var qdate = moment(date, 'DD/MM/YYYY HH:mm');
-                            if(qdate.isBefore(lastweek)) {
-                                $("#created-date-a-@answer.id").append('at ' + date);
-                            } else {
-                                $("#created-date-a-@answer.id").append(qdate.fromNow());
-                            }
-                        });
-                    </script>
-					<span class="glyphicon glyphicon-star-empty">@answer.rating()</span>
-					<a href="@routes.Answers.rate(answer.id)">
-						<span class="glyphicon glyphicon-star-empty">Rate</span>
-					</a>
-				</div>
-				<div class="panel-body">
-					@answer.text
-				</div>
+
+<!-- Answers -->
+	@for(answer <- question.answers) {
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<span>@answer.text</span>
 			</div>
-		}
-	</div>
-		
+			<div class="panel-footer">
+				<p align="right">
+					<span>@answer.owner.userName</span>
+					<span data-date="@answer.createdAsString()"></span>
+					<span class="glyphicon glyphicon-star-empty">@answer.rating()</span>
+					<a href="@routes.Answers.rate(answer.id)">Rate</a>
+				</p>
+			</div>
+		</div>
+	}
 </div>
+
 }

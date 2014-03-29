@@ -11,23 +11,12 @@
 				</td>
 				<td>
 					<span id="created-date-@question.id">Created:
-                        <script type="text/javascript">
-                            $(function() {
-                                var date = '@question.createdAsString()';
-                                var lastweek = moment().subtract('days',7);
-                                var qdate = moment(date, 'DD/MM/YYYY HH:mm');
-                                if(qdate.isBefore(lastweek)) {
-                                    $("#created-date-@question.id").append(date);
-                                } else {
-                                    $("#created-date-@question.id").append(qdate.fromNow());
-                                }
-                            });
-                        </script>
                     </span>
+                    <span data-date="@question.createdAsString()"></span>
 				</td>
 				<td>
 					<span class="glyphicon glyphicon-star-empty">@question.rating()</span>
 				</td>
-				</tr>
+			</tr>
 		}
 	</table>
